@@ -8,19 +8,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashDistance = 2f;
     [SerializeField] private float dashDuration = 0.2f;
     [SerializeField] private float doubleTapTime = 0.3f;
-    [SerializeField] private float dashCooldown = 1f;    // Настраиваемое время кулдауна
+    [SerializeField] private float dashCooldown = 1f;  
 
     private PlayerControls playerControls;
     private Vector2 moveInput;
     private CharacterController controller;
-
-    // Переменные для даша
     private bool isDashing = false;
     private float dashTimeLeft;
     private Vector3 dashDirection;
-    private float dashCooldownTimer;                    // Таймер кулдауна
-
-    // Переменные для отслеживания двойного нажатия
+    private float dashCooldownTimer;                  
+    
     private float lastTapTimeW = -1f;
     private float lastTapTimeA = -1f;
     private float lastTapTimeS = -1f;
@@ -34,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
         playerControls.Movement.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         playerControls.Movement.Move.canceled += ctx => moveInput = Vector2.zero;
         
-        dashCooldownTimer = 0f;                         // Инициализация таймера
+        dashCooldownTimer = 0f;                        
     }
 
     private void OnEnable()
@@ -49,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (dashCooldownTimer > 0)                      // Уменьшаем таймер кулдауна
+        if (dashCooldownTimer > 0)                     
         {
             dashCooldownTimer -= Time.deltaTime;
         }
@@ -92,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckForDash()
     {
-        if (dashCooldownTimer > 0) return;              // Блокируем даш, если кулдаун активен
+        if (dashCooldownTimer > 0) return;             
 
         if (Keyboard.current.wKey.wasPressedThisFrame)
         {
@@ -136,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
         dashTimeLeft = dashDuration;
         dashDirection = direction.normalized;
-        dashCooldownTimer = dashCooldown;               // Запускаем кулдаун после даша
+        dashCooldownTimer = dashCooldown;               
     }
 
     public float GetDashCooldownRemaining()
