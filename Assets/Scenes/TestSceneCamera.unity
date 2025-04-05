@@ -242,7 +242,6 @@ GameObject:
   - component: {fileID: 793587813}
   - component: {fileID: 793587818}
   - component: {fileID: 793587817}
-  - component: {fileID: 793587819}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -352,15 +351,7 @@ MonoBehaviour:
   dashDistance: 5
   dashDuration: 0.2
   doubleTapTime: 0.3
-  playerInputActions:
-    m_Name: Player Input Actions
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: ebd9e108-64ea-4b45-816e-5efbb7b34a42
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
+  dashCooldown: 1
 --- !u!143 &793587818
 CharacterController:
   m_ObjectHideFlags: 0
@@ -387,37 +378,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &793587819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 793587812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 68930d6e1eade8c438477a96d95eedaa,
-    type: 3}
-  m_NotificationBehavior: 3
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Movement
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &1028493685
 GameObject:
   m_ObjectHideFlags: 0
