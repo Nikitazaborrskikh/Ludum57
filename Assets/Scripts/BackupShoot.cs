@@ -9,10 +9,19 @@ public class BackupShoot : MonoBehaviour
     public Vector3 offset;
 
     public float coolDownAttack = 1f;
+    public float coolDownBullet = 0.1f;
     public int countBullets = 6;
-    public int fanAngle = 50;
+    public int fanAngle = 180;
 
     private float timeAfterLastShot;
+    private float angel;
+    private float back;
+
+    private void Start()
+    {
+        angel = fanAngle / (countBullets-1);
+        back = fanAngle / 2;
+    }
 
     // Update is called once per frame
     void Update()
@@ -20,11 +29,13 @@ public class BackupShoot : MonoBehaviour
         timeAfterLastShot += Time.deltaTime;
         if (timeAfterLastShot >= coolDownAttack)
         {
+            Vector3 eulerAngles = transform.eulerAngles;
             for (int i = 0; i < countBullets; i++)
             {
-                StartCoroutine(BulletManager.Instance.CallShootBullet(bulletPrefab2, gameObject, transform.position + transform.rotation * offset, Quaternion.Euler(0f, 360/countBullets*i, 0f), 0.1f));
+                StartCoroutine(BulletManager.Instance.CallShootBullet(bulletPrefab2, gameObject, transform.position + transform.rotation * offset,
+                Quaternion.Euler(eulerAngles.x, eulerAngles.y - back + angel * i, eulerAngles.z), coolDownBullet*i));
+                timeAfterLastShot = 0f;
             }
-            timeAfterLastShot = 0f;
         }
     }
 }

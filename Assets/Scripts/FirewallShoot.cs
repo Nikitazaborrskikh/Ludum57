@@ -18,7 +18,7 @@ public class FirewallShoot : MonoBehaviour
 
     private void Start()
     {
-        angel = fanAngle / 3;
+        angel = fanAngle / 2;
         back = fanAngle / 2;
     }
 
