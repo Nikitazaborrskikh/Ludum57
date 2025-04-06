@@ -61,12 +61,13 @@ public class SectionController : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (isActive && !hasDamaged && other.CompareTag("Player")) // Проверяем, не нанесли ли уже урон
+        if (isActive && !hasDamaged && other.gameObject.layer == LayerMask.NameToLayer("Player") /*Player.layer*/) // Проверяем, не нанесли ли уже урон
         {
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(1);
+                Debug.Log("Player is damaged");
+                //playerHealth.TakeDamage(1);
                 hasDamaged = true; // Устанавливаем флаг, чтобы урон больше не наносился
             }
         }

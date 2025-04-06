@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9008660177946558446}
   - component: {fileID: 7237243234842735975}
   - component: {fileID: 8156662968138486087}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 732e93ab8f1419a40afd3e46a7752cab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 8
   dashDistance: 5
   dashDuration: 0.2
   doubleTapTime: 0.3
@@ -159,6 +159,7 @@ MonoBehaviour:
   bulletSpeed: 10
   bulletSpawnPoint: {fileID: 0}
   rotationSpeed: 10
+  rotationDeadZone: 0.1
 --- !u!1 &3323454066046534888
 GameObject:
   m_ObjectHideFlags: 0
