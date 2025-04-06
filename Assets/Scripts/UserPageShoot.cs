@@ -12,23 +12,23 @@ public class UserPageShoot : MonoBehaviour
 
     public float coolDownAttack = 1f;
 
-    private float timeAfterLastShot;
+    private float timeAfterLastShoot;
 
     // Update is called once per frame
     void Update()
     {
-        timeAfterLastShot += Time.deltaTime;
-        if (timeAfterLastShot >= coolDownAttack)
+        timeAfterLastShoot += Time.deltaTime;
+        if (timeAfterLastShoot >= coolDownAttack)
         {
             StartCoroutine(RunTwoFunctions());
-            timeAfterLastShot = 0f;
+            timeAfterLastShoot = 0f;
         }
     }
 
     private IEnumerator RunTwoFunctions()
     {
         // Запускаем обе функции как корутины
-        yield return BulletManager.Instance.CallShootBullet(bulletPrefab1, gameObject, transform.position + transform.rotation * offset1, 0.1f);
-        yield return BulletManager.Instance.CallShootBullet(bulletPrefab2, gameObject, transform.position + transform.rotation * offset2, 0.0f);
+        yield return BulletManager.Instance.CallShootBullet(bulletPrefab1, gameObject, transform.position + transform.rotation * offset1, transform.rotation, 0.1f);
+        yield return BulletManager.Instance.CallShootBullet(bulletPrefab2, gameObject, transform.position + transform.rotation * offset2, transform.rotation, 0.0f);
     }   
 }

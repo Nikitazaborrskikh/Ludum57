@@ -41,26 +41,26 @@ public class BulletManager : MonoBehaviour
         return null;
     }
 
-    public IEnumerator CallShootBullet(GameObject bulletPrefab, GameObject shooter, Vector3 newPositiion, float delay)
+    public IEnumerator CallShootBullet(GameObject bulletPrefab, GameObject shooter, Vector3 newPositiion, Quaternion forward, float delay)
     {
         yield return new WaitForSeconds(delay);
         
-        ShootBullet(bulletPrefab, shooter, newPositiion);
+        ShootBullet(bulletPrefab, shooter, newPositiion, forward);
     }
 
-    private void activateBullet(GameObject bulletPrefab, GameObject shooter, Vector3 newPositiion)
+    private void activateBullet(GameObject bulletPrefab, GameObject shooter, Vector3 newPositiion, Quaternion forward)
     {
         var bullet = findFreeBullet(bulletPrefab);
         bullet.transform.position = newPositiion;
-        bullet.transform.rotation = shooter.transform.rotation;
+        bullet.transform.rotation = forward;
         bullet.shooter = shooter;
         bullet.gameObject.SetActive(true);
     }
-    public void ShootBullet(GameObject bulletPrefab, GameObject shooter, Vector3 newPositiion)
+    public void ShootBullet(GameObject bulletPrefab, GameObject shooter, Vector3 newPositiion, Quaternion forward)
     {
-        if (findFreeBullet(bulletPrefab)) { activateBullet(bulletPrefab, shooter, newPositiion); return; }
+        if (findFreeBullet(bulletPrefab)) { activateBullet(bulletPrefab, shooter, newPositiion, forward); return; }
         CreateBullet(bulletPrefab);
-        activateBullet(bulletPrefab, shooter, newPositiion);
+        activateBullet(bulletPrefab, shooter, newPositiion, forward);
     }
 
     private void OnRenderObject()

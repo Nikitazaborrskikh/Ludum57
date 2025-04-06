@@ -11,21 +11,21 @@ public class PlayerShoot : MonoBehaviour
     public float coolDownStandartAttack = 1f;
     public float coolDownLargeAttack = 1.5f;
 
-    private float timeAfterLastShot;
+    private float timeAfterLastShoot;
 
     // Update is called once per frame
     void Update()
     {
-        timeAfterLastShot += Time.deltaTime;    
-        if (Input.GetButtonDown("Fire1") && timeAfterLastShot >= coolDownStandartAttack)
+        timeAfterLastShoot += Time.deltaTime;    
+        if (Input.GetButtonDown("Fire1") && timeAfterLastShoot >= coolDownStandartAttack)
         {
-            BulletManager.Instance.ShootBullet(bulletStandartPrefab, gameObject, transform.position + transform.rotation * offset);
-            timeAfterLastShot = 0f;
+            BulletManager.Instance.ShootBullet(bulletStandartPrefab, gameObject, transform.position + transform.rotation * offset, transform.rotation);
+            timeAfterLastShoot = 0f;
         }
-        if (Input.GetButtonDown("Fire2") && timeAfterLastShot >= coolDownLargeAttack)
+        if (Input.GetButtonDown("Fire2") && timeAfterLastShoot >= coolDownLargeAttack)
         {
-            BulletManager.Instance.ShootBullet(bulletLargePrefab, gameObject, transform.position + transform.rotation * offset);
-            timeAfterLastShot = 0f;
+            BulletManager.Instance.ShootBullet(bulletLargePrefab, gameObject, transform.position + transform.rotation * offset, transform.rotation);
+            timeAfterLastShoot = 0f;
         }
     }
 }

@@ -9,16 +9,16 @@ public class CapthaShoot : MonoBehaviour
 
     public float coolDownAttack = 1f;
 
-    private float timeAfterLastShot;
+    private float timeAfterLastShoot;
 
     // Update is called once per frame
     void Update()
     {
-        timeAfterLastShot += Time.deltaTime;
-        if (timeAfterLastShot >= coolDownAttack)
+        timeAfterLastShoot += Time.deltaTime;
+        if (timeAfterLastShoot >= coolDownAttack)
         {
-            BulletManager.Instance.ShootBullet(bulletPrefab, gameObject, transform.position + transform.rotation * offset);
-            timeAfterLastShot = 0f;
+            BulletManager.Instance.ShootBullet(bulletPrefab, gameObject, transform.position + transform.rotation * offset, transform.rotation);
+            timeAfterLastShoot = 0f;
         }
     }
 }
