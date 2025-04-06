@@ -5,10 +5,12 @@ using Zenject.SpaceFighter;
 
 public class Bullet : MonoBehaviour
 {
-    public string type; // "Standart"/"Large"
     public float speed; // Скорость пули
     public float lifetime = 2f; // Время жизни пули
+    public string[] tagsNonBreaking = { "PlayerBullet" };
+
     private float timeAlive;
+    public GameObject shooter;
 
     private void OnEnable()
     {
@@ -30,11 +32,12 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.gameObject == shooter) return;
+        foreach (var tag in tagsNonBreaking)
         {
-            Debug.Log("Попадание в врага: " + other.gameObject.name);
-            gameObject.SetActive(false);
+            if (other.CompareTag(tag)) return;
         }
+        gameObject.SetActive(false);
     }
 
     private void OnRenderObject()

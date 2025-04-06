@@ -1,58 +1,66 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletManager : MonoBehaviour
 {
-    public GameObject bulletStandartPrefab; // Префаб пули
-    public GameObject bulletLargePrefab; // Префаб пули
-    public Transform firePoint; // Точка, откуда будет вылетать пуля
-    public int maxBullets = 20; // Максимальное количество пуль
+    public static BulletManager Instance { get; private set; }
+
     private List<Bullet> bullets = new List<Bullet>(); // Список активных пуль
 
-    private void Start()
+    private void Awake()
     {
-        // Создаем пул пуль
-        for (int i = 0; i < maxBullets/2; i++)
+        // Проверяем, существует ли уже экземпляр BulletManager
+        if (Instance != null && Instance != this)
         {
-            GameObject newBullet = Instantiate(bulletStandartPrefab);
-            newBullet.SetActive(false);
-            bullets.Add(newBullet.GetComponent<Bullet>());
+            Destroy(gameObject); // Уничтожаем дубликат
+            return;
         }
 
-        for (int i = 0; i < maxBullets/2; i++)
-        {
-            GameObject newBullet = Instantiate(bulletLargePrefab);
-            newBullet.SetActive(false);
-            bullets.Add(newBullet.GetComponent<Bullet>());
-        }
+        Instance = this; // Устанавливаем текущий экземпляр как единственный
+        DontDestroyOnLoad(gameObject); // Не уничтожаем объект при загрузке новой сцены
     }
 
-    private void Update()
+    private void CreateBullet(GameObject bullet)
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            ShootBullet("Standart");
-        }
-        if (Input.GetButtonDown("Fire2"))
-        {
-            ShootBullet("Large");
-        }
+        GameObject newBullet = Instantiate(bullet);
+        newBullet.SetActive(false);
+        bullets.Add(newBullet.GetComponent<Bullet>());
     }
 
-
-    void ShootBullet(string type)
+    private Bullet findFreeBullet(GameObject bulletPrefab)
     {
         foreach (var bullet in bullets)
         {
-            if (!bullet.gameObject.activeInHierarchy && bullet.type == type)
+            if ((!bullet.gameObject.activeInHierarchy) && bullet.gameObject.name == bulletPrefab.name + "(Clone)")
             {
-                bullet.transform.position = firePoint.position;
-                bullet.transform.rotation = firePoint.rotation;
-                bullet.gameObject.SetActive(true); 
-                return; 
+                return bullet;
             }
         }
+        return null;
+    }
+
+    public IEnumerator CallShootBullet(GameObject bulletPrefab, GameObject shooter, Vector3 newPositiion, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        
+        ShootBullet(bulletPrefab, shooter, newPositiion);
+    }
+
+    private void activateBullet(GameObject bulletPrefab, GameObject shooter, Vector3 newPositiion)
+    {
+        var bullet = findFreeBullet(bulletPrefab);
+        bullet.transform.position = newPositiion;
+        bullet.transform.rotation = shooter.transform.rotation;
+        bullet.shooter = shooter;
+        bullet.gameObject.SetActive(true);
+    }
+    public void ShootBullet(GameObject bulletPrefab, GameObject shooter, Vector3 newPositiion)
+    {
+        if (findFreeBullet(bulletPrefab)) { activateBullet(bulletPrefab, shooter, newPositiion); return; }
+        CreateBullet(bulletPrefab);
+        activateBullet(bulletPrefab, shooter, newPositiion);
     }
 
     private void OnRenderObject()
