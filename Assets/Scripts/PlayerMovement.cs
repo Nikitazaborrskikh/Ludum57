@@ -64,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMovement()
     {
+        //Debug.Log("move");
         Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y).normalized;
         Vector3 moveVelocity = moveDirection * moveSpeed;
         
