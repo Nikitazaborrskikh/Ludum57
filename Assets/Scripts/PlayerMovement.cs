@@ -162,7 +162,6 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions
 
     private void HandleMovement()
     {
-        //Debug.Log("Move");
         Vector3 moveDirection = Vector3.zero;
         moveDirection += transform.forward * moveInput.y;
         moveDirection += transform.right * moveInput.x;

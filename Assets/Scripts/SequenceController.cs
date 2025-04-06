@@ -20,7 +20,7 @@ public class SequenceController : MonoBehaviour
         StartCoroutine(RunSequence());
     }
 
-    IEnumerator RunSequence()
+    public IEnumerator RunSequence()
     {
         while (true)
         {

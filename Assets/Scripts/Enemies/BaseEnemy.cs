@@ -1,18 +1,20 @@
 using UnityEngine;
+using Zenject;
 
 namespace Enemies
 {
     public abstract class BaseEnemy : MonoBehaviour, IEnemy
     {
+        [SerializeField] protected EnemyConfig config;
+        [SerializeField] private GameObject player;
+        
         public float Health { get; set; }
         public abstract float AttackSpeed { get; }
         public abstract float DamagePerProjectile { get; }
         public abstract float MovementSpeed { get; }
-
-        protected float attackTimer;
-        protected GameObject projectilePrefab;
+        public abstract float DistanceToPlayer { get; }
         
-        [SerializeField] private GameObject player;
+        private float attackTimer;
 
         protected virtual void Update()
         {
@@ -39,7 +41,7 @@ namespace Enemies
         public abstract void Attack(Vector3 playerPosition);
         public abstract void Move(Vector3 playerPosition);
 
-        protected Vector3 FindPlayerPosition()
+        private Vector3 FindPlayerPosition()
         {
             return player.transform.position;
         }
