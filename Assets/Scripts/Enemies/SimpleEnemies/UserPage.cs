@@ -11,10 +11,12 @@ namespace Enemies.SimpleEnemies
         public override float DistanceToPlayer => config.userPageStats.distanceToPlayer;
         
         private ProjectileType projectileType => config.userPageStats.projectileType;
+        private Rigidbody rb;
         
         private void Awake()
         {
             Health = config.userPageStats.health;
+            rb = GetComponent<Rigidbody>();
         }
 
         public override void Attack(Vector3 playerPosition)
@@ -31,15 +33,18 @@ namespace Enemies.SimpleEnemies
 
         public override void Move(Vector3 playerPosition)
         {
+            Vector3 direction = (playerPosition - transform.position).normalized;
+            transform.rotation = Quaternion.LookRotation(direction);
+            
             float distance = Vector3.Distance(transform.position, playerPosition);
             if (distance > DistanceToPlayer) // Дистанция атаки
             {
-                Vector3 direction = (playerPosition - transform.position).normalized;
-                transform.rotation = Quaternion.LookRotation(direction);
+                rb.constraints = RigidbodyConstraints.None;
                 transform.position = Vector3.MoveTowards(transform.position,
                     playerPosition,
                     MovementSpeed * Time.deltaTime);
             }
+            else rb.constraints = RigidbodyConstraints.FreezePosition;
         }
     }
 }

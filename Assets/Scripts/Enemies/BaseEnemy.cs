@@ -1,12 +1,12 @@
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 namespace Enemies
 {
     public abstract class BaseEnemy : MonoBehaviour, IEnemy
     {
         [SerializeField] protected EnemyConfig config;
-        [SerializeField] private GameObject player;
         [Inject] protected UpgradeManager upgradeManager;
         public float Health { get; set; }
         public abstract float AttackSpeed { get; }
@@ -14,7 +14,13 @@ namespace Enemies
         public abstract float MovementSpeed { get; }
         public abstract float DistanceToPlayer { get; }
         
+        private GameObject player;
         private float attackTimer;
+
+        private void Start()
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
 
         protected virtual void Update()
         {
@@ -36,7 +42,6 @@ namespace Enemies
             if (Health <= 0)
             {
                 Die();
-                Destroy(gameObject);
             }
         }
 

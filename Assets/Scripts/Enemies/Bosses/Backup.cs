@@ -12,6 +12,7 @@ namespace Enemies.Bosses
         public override float DistanceToPlayer => config.backupStats.distanceToPlayer;
         
         private ProjectileType projectileType => config.backupStats.projectileType;
+        private Rigidbody rb;
         
         private float spawnTimer;
         public GameObject firewallPrefab;
@@ -19,6 +20,7 @@ namespace Enemies.Bosses
         private void Awake()
         {
             Health = config.backupStats.health;
+            rb = GetComponent<Rigidbody>();
         }
         
         private void Start()
@@ -45,15 +47,18 @@ namespace Enemies.Bosses
 
         public override void Move(Vector3 playerPosition)
         {
+            Vector3 direction = (playerPosition - transform.position).normalized;
+            transform.rotation = Quaternion.LookRotation(direction);
+            
             float distance = Vector3.Distance(transform.position, playerPosition);
             if (distance > DistanceToPlayer) // Дистанция атаки
             {
-                Vector3 direction = (playerPosition - transform.position).normalized;
-                transform.rotation = Quaternion.LookRotation(direction);
+                rb.constraints = RigidbodyConstraints.None;
                 transform.position = Vector3.MoveTowards(transform.position,
                     playerPosition,
                     MovementSpeed * Time.deltaTime);
             }
+            else rb.constraints = RigidbodyConstraints.FreezePosition;
         }
         
         private IEnumerator SpawnFirewallRoutine()
