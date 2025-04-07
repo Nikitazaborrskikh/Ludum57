@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5102035061717864817}
   - component: {fileID: 5403109619645095039}
   - component: {fileID: 5730718666934835547}
-  - component: {fileID: 8324745342614839986}
+  - component: {fileID: -8398242201661086949}
   - component: {fileID: 5632468978047119806}
   m_Layer: 0
   m_Name: BulletStandart
@@ -107,7 +107,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &8324745342614839986
+--- !u!54 &-8398242201661086949
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
