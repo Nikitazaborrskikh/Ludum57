@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class BackupShoot : MonoBehaviour
 {
-    public GameObject bulletPrefab1;
-    public GameObject bulletPrefab2;
+    public GameObject bulletPrefab;
     public Vector3 offset;
 
     public float coolDownAttack = 1f;
@@ -32,7 +31,7 @@ public class BackupShoot : MonoBehaviour
             Vector3 eulerAngles = transform.eulerAngles;
             for (int i = 0; i < countBullets; i++)
             {
-                StartCoroutine(BulletManager.Instance.CallShootBullet(bulletPrefab2, gameObject, transform.position + transform.rotation * offset,
+                StartCoroutine(BulletManager.Instance.CallShootBullet(bulletPrefab, gameObject, transform.position + transform.rotation * offset,
                 Quaternion.Euler(eulerAngles.x, eulerAngles.y - back + angel * i, eulerAngles.z), coolDownBullet*i));
                 timeAfterLastShot = 0f;
             }

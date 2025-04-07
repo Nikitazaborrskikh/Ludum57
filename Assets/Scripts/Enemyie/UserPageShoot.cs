@@ -5,8 +5,7 @@ using Zenject.SpaceFighter;
 
 public class UserPageShoot : MonoBehaviour
 {
-    public GameObject bulletPrefab1; // Префаб пули
-    public GameObject bulletPrefab2; // Префаб пули
+    public GameObject bulletPrefab; // Префаб пули
     public Vector3 offset1;
     public Vector3 offset2;
 
@@ -28,7 +27,7 @@ public class UserPageShoot : MonoBehaviour
     private IEnumerator RunTwoFunctions()
     {
         // Запускаем обе функции как корутины
-        yield return BulletManager.Instance.CallShootBullet(bulletPrefab1, gameObject, transform.position + transform.rotation * offset1, transform.rotation, 0.1f);
-        yield return BulletManager.Instance.CallShootBullet(bulletPrefab2, gameObject, transform.position + transform.rotation * offset2, transform.rotation, 0.0f);
+        yield return BulletManager.Instance.CallShootBullet(bulletPrefab, gameObject, transform.position + transform.rotation * offset1, transform.rotation, 0.1f);
+        yield return BulletManager.Instance.CallShootBullet(bulletPrefab, gameObject, transform.position + transform.rotation * offset2, transform.rotation, 0.0f);
     }   
 }

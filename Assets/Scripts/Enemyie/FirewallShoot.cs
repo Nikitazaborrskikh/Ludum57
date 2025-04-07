@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class FirewallShoot : MonoBehaviour
 {
-    public GameObject bulletPrefab1;
-    public GameObject bulletPrefab2;
+    public GameObject bulletPrefab;
     public Vector3 offset;
 
     public int fanAngle = 50;
@@ -29,11 +28,11 @@ public class FirewallShoot : MonoBehaviour
         if (timeAfterLastShoot >= coolDownAttack)
         {
             Vector3 eulerAngles = transform.eulerAngles;
-            BulletManager.Instance.ShootBullet(bulletPrefab1, gameObject, transform.position + transform.rotation * offset,
-                Quaternion.Euler(eulerAngles.x, eulerAngles.y - back + angel * 0, eulerAngles.z));
-            StartCoroutine(BulletManager.Instance.CallShootBullet(bulletPrefab2, gameObject, transform.position + transform.rotation * offset, 
-                Quaternion.Euler(eulerAngles.x, eulerAngles.y - back + angel * 1, eulerAngles.z), coolDownBullet));
-            StartCoroutine(BulletManager.Instance.CallShootBullet(bulletPrefab1, gameObject, transform.position + transform.rotation * offset, 
+            StartCoroutine(BulletManager.Instance.CallShootBullet(bulletPrefab, gameObject, transform.position + transform.rotation * offset,
+                Quaternion.Euler(eulerAngles.x, eulerAngles.y - back + angel * 0, eulerAngles.z), coolDownBullet * 0));
+            StartCoroutine(BulletManager.Instance.CallShootBullet(bulletPrefab, gameObject, transform.position + transform.rotation * offset, 
+                Quaternion.Euler(eulerAngles.x, eulerAngles.y - back + angel * 1, eulerAngles.z), coolDownBullet * 1));
+            StartCoroutine(BulletManager.Instance.CallShootBullet(bulletPrefab, gameObject, transform.position + transform.rotation * offset, 
                 Quaternion.Euler(eulerAngles.x, eulerAngles.y - back + angel * 2, eulerAngles.z), coolDownBullet*2));
             timeAfterLastShoot = 0f;
         }
