@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackupShoot : MonoBehaviour
+public class BackupShoot : Shoot
 {
     public GameObject bulletPrefab;
     public Vector3 offset;
@@ -12,6 +12,9 @@ public class BackupShoot : MonoBehaviour
     public int countBullets = 6;
     public int fanAngle = 180;
 
+    public AudioClip shootSound;
+    private AudioSource audioSource;
+
     private float timeAfterLastShot;
     private float angel;
     private float back;
@@ -20,6 +23,7 @@ public class BackupShoot : MonoBehaviour
     {
         angel = fanAngle / (countBullets-1);
         back = fanAngle / 2;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -28,6 +32,7 @@ public class BackupShoot : MonoBehaviour
         timeAfterLastShot += Time.deltaTime;
         if (timeAfterLastShot >= coolDownAttack)
         {
+            audioSource.PlayOneShot(shootSound);
             Vector3 eulerAngles = transform.eulerAngles;
             for (int i = 0; i < countBullets; i++)
             {

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class BulletManager : MonoBehaviour
 {
+
+    public GameObject pullBullet;
     public static BulletManager Instance { get; private set; }
 
     private List<Bullet> bullets = new List<Bullet>(); // Список активных пуль
@@ -24,7 +26,7 @@ public class BulletManager : MonoBehaviour
 
     private void CreateBullet(GameObject bullet)
     {
-        GameObject newBullet = Instantiate(bullet);
+        GameObject newBullet = Instantiate(bullet, pullBullet.transform);
         newBullet.SetActive(false);
         bullets.Add(newBullet.GetComponent<Bullet>());
     }
