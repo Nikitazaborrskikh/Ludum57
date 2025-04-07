@@ -2,14 +2,17 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using UnityEngine.SceneManagement;
 
 public class PlayerStats : IInitializable, IDisposable
 {
+    
+    public event Action<float> OnHealthChanged;
     private float baseMoveSpeed = 5f;
     private float baseFireRate = 0.5f; 
     private float baseDamage = 10f;
     private int baseBulletCount = 1;
-    private float baseHealth = 100f;
+    private float baseHealth = 6f;
     private float baseDashDistance = 5f; 
 
     private float currentMoveSpeed;
@@ -109,9 +112,18 @@ public class PlayerStats : IInitializable, IDisposable
 
     public void TakeDamage(float damage)
     {
-        
-        currentHealth -= damage;  
-        Debug.Log(currentHealth);
+        currentHealth -= damage;
+        OnHealthChanged?.Invoke(currentHealth);
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        SceneManager.LoadScene();
+        Dispose();
     }
 
     private float CalculateStat(float baseValue, UpgradeType type)

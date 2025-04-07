@@ -13,12 +13,13 @@ namespace Enemies.SimpleEnemies
 
         private ProjectileType projectileType => config.captchaStats.projectileType;
         private Rigidbody rb;
+
         private void Awake()
         {
             Health = config.captchaStats.health;
             rb = GetComponent<Rigidbody>();
         }
-        
+
         public override void Attack(Vector3 playerPosition)
         {
             StartCoroutine(AttackSequence(playerPosition));
@@ -29,10 +30,15 @@ namespace Enemies.SimpleEnemies
             for (int i = 0; i < 3; i++)
             {
                 Vector3 direction = (playerPosition - transform.position).normalized;
-                Projectile projectile = ProjectilePool.Instance.GetProjectile(
-                    projectileType, transform.position, Quaternion.identity);
-                projectile.GetComponent<Projectile>().Initialize(direction, DamagePerProjectile, projectileType, this);
-                yield return new WaitForSeconds(0.2f); // Задержка 0.2 секунды между выстрелами
+                Quaternion rotation = Quaternion.LookRotation(direction);
+                Projectile projectile = projectilePool.GetProjectile(
+                    GetProjectilePrefab(),
+                    projectileType,
+                    transform.position,
+                    rotation // Используем rotation вместо Quaternion.identity для направления
+                );
+                projectile.Initialize(GetProjectilePrefab(), direction, rotation, DamagePerProjectile, projectileType, this);
+                yield return new WaitForSeconds(0.2f);
             }
         }
 
@@ -40,17 +46,29 @@ namespace Enemies.SimpleEnemies
         {
             Vector3 direction = (playerPosition - transform.position).normalized;
             transform.rotation = Quaternion.LookRotation(direction);
-            
+
             float distance = Vector3.Distance(transform.position, playerPosition);
-            if (distance > DistanceToPlayer) // Дистанция атаки
+            if (distance > DistanceToPlayer)
             {
                 rb.constraints = RigidbodyConstraints.None;
                 transform.position = Vector3.MoveTowards(transform.position,
                     playerPosition,
                     MovementSpeed * Time.deltaTime);
             }
-            else rb.constraints = RigidbodyConstraints.FreezePosition;
+            else
+            {
+                rb.constraints = RigidbodyConstraints.FreezePosition;
+            }
         }
-        
+
+        protected override GameObject GetProjectilePrefab()
+        {
+            return config.captchaStats.projectilePrefab;
+        }
+
+        protected override ProjectileType GetProjectileType()
+        {
+            return config.captchaStats.projectileType;
+        }
     }
 }

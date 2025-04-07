@@ -10,11 +10,12 @@ namespace Enemies.SimpleEnemies
         public override float DamagePerProjectile => config.firewallStats.damagePerProjectile;
         public override float MovementSpeed => /*PlayerStats.Speed*/ 5f / config.firewallStats.movementSpeedDivider;
         public override float DistanceToPlayer => config.firewallStats.distanceToPlayer;
-        
+
         private ProjectileType projectileType => config.firewallStats.projectileType;
         private Rigidbody rb;
-        
+
         [Inject] private UpgradeManager upgradeManager;
+
         private void Awake()
         {
             Health = config.firewallStats.health;
@@ -27,9 +28,14 @@ namespace Enemies.SimpleEnemies
             for (int i = -1; i <= 1; i++)
             {
                 Vector3 spread = Quaternion.Euler(0, 15 * i, 0) * direction;
+                Quaternion rotation = Quaternion.LookRotation(spread);
                 Projectile projectile = ProjectilePool.Instance.GetProjectile(
-                    projectileType, transform.position, Quaternion.identity);
-                projectile.GetComponent<Projectile>().Initialize(spread, DamagePerProjectile, projectileType, this);
+                    GetProjectilePrefab(),
+                    projectileType,
+                    transform.position,
+                    rotation
+                );
+                projectile.Initialize(GetProjectilePrefab(), spread, rotation, DamagePerProjectile, projectileType, this);
             }
         }
 
@@ -37,9 +43,9 @@ namespace Enemies.SimpleEnemies
         {
             Vector3 direction = (playerPosition - transform.position).normalized;
             transform.rotation = Quaternion.LookRotation(direction);
-            
+
             float distance = Vector3.Distance(transform.position, playerPosition);
-            if (distance > DistanceToPlayer) // Дистанция атаки
+            if (distance > DistanceToPlayer)
             {
                 rb.constraints = RigidbodyConstraints.None;
                 transform.position = Vector3.MoveTowards(transform.position,
@@ -47,6 +53,16 @@ namespace Enemies.SimpleEnemies
                     MovementSpeed * Time.deltaTime);
             }
             else rb.constraints = RigidbodyConstraints.FreezePosition;
+        }
+
+        protected override GameObject GetProjectilePrefab()
+        {
+            return config.firewallStats.projectilePrefab;
+        }
+
+        protected override ProjectileType GetProjectileType()
+        {
+            return config.firewallStats.projectileType;
         }
     }
 }

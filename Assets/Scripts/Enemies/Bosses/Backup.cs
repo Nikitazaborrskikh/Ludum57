@@ -10,10 +10,10 @@ namespace Enemies.Bosses
         public override float DamagePerProjectile => config.backupStats.damagePerProjectile;
         public override float MovementSpeed => /*PlayerStats.Speed*/ 5f / config.backupStats.movementSpeedDivider;
         public override float DistanceToPlayer => config.backupStats.distanceToPlayer;
-        
+
         private ProjectileType projectileType => config.backupStats.projectileType;
         private Rigidbody rb;
-        
+
         private float spawnTimer;
         public GameObject firewallPrefab;
 
@@ -22,25 +22,30 @@ namespace Enemies.Bosses
             Health = config.backupStats.health;
             rb = GetComponent<Rigidbody>();
         }
-        
+
         private void Start()
         {
-            StartCoroutine(SpawnFirewallRoutine()); // Запускаем корутину при старте
+            StartCoroutine(SpawnFirewallRoutine());
         }
 
         public override void Attack(Vector3 playerPosition)
         {
             Vector3 direction = (playerPosition - transform.position).normalized;
-            float angleStep = 15f; // Шаг угла между снарядами
-            float startAngle = -angleStep * 2.5f; // Начальный угол для 6 снарядов: -37.5°
+            float angleStep = 15f;
+            float startAngle = -angleStep * 2.5f;
 
             for (int i = 0; i < 6; i++)
             {
-                float angle = startAngle + (i * angleStep); // -37.5°, -22.5°, -7.5°, 7.5°, 22.5°, 37.5°
+                float angle = startAngle + (i * angleStep);
                 Vector3 spread = Quaternion.Euler(0, angle, 0) * direction;
+                Quaternion rotation = Quaternion.LookRotation(spread);
                 Projectile projectile = ProjectilePool.Instance.GetProjectile(
-                    projectileType, transform.position, Quaternion.identity);
-                projectile.Initialize(spread, DamagePerProjectile, projectileType, this);
+                    GetProjectilePrefab(),
+                    projectileType,
+                    transform.position,
+                    rotation
+                );
+                projectile.Initialize(GetProjectilePrefab(), spread, rotation, DamagePerProjectile, projectileType, this);
                 projectile.OnHit += HandleProjectileHit;
             }
         }
@@ -49,9 +54,9 @@ namespace Enemies.Bosses
         {
             Vector3 direction = (playerPosition - transform.position).normalized;
             transform.rotation = Quaternion.LookRotation(direction);
-            
+
             float distance = Vector3.Distance(transform.position, playerPosition);
-            if (distance > DistanceToPlayer) // Дистанция атаки
+            if (distance > DistanceToPlayer)
             {
                 rb.constraints = RigidbodyConstraints.None;
                 transform.position = Vector3.MoveTowards(transform.position,
@@ -60,12 +65,12 @@ namespace Enemies.Bosses
             }
             else rb.constraints = RigidbodyConstraints.FreezePosition;
         }
-        
+
         private IEnumerator SpawnFirewallRoutine()
         {
-            while (true) // Бесконечный цикл для постоянного спавна
+            while (true)
             {
-                yield return new WaitForSeconds(Random.Range(10f, 15f)); // Ждем 10–15 секунд
+                yield return new WaitForSeconds(Random.Range(10f, 15f));
                 SpawnFirewalls();
             }
         }
@@ -82,10 +87,10 @@ namespace Enemies.Bosses
                 Instantiate(firewallPrefab, transform.position + Random.insideUnitSphere * 2f, Quaternion.identity);
             }
         }
-        
+
         private void HandleProjectileHit(GameObject target)
         {
-            if (target.gameObject.layer == LayerMask.NameToLayer("Player") /*Player.layer*/)
+            if (target.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 OnProjectileHitPlayer();
             }
@@ -95,16 +100,29 @@ namespace Enemies.Bosses
         {
             Health = Mathf.Min(Health + 15f, config.backupStats.health);
         }
-        
+
         private void OnDestroy()
         {
-            foreach (Projectile proj in ProjectilePool.Instance.allProjectiles[projectileType])
+            foreach (var projectileList in ProjectilePool.Instance.allProjectiles.Values)
             {
-                if (proj.owner == this)
+                foreach (Projectile proj in projectileList)
                 {
-                    proj.OnHit -= HandleProjectileHit;
+                    if (proj.owner == this)
+                    {
+                        proj.OnHit -= HandleProjectileHit;
+                    }
                 }
             }
+        }
+
+        protected override GameObject GetProjectilePrefab()
+        {
+            return config.backupStats.projectilePrefab;
+        }
+
+        protected override ProjectileType GetProjectileType()
+        {
+            return config.backupStats.projectileType;
         }
     }
 }
