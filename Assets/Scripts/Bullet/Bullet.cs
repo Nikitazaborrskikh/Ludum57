@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Enemies;
 using UnityEngine;
 using Zenject.SpaceFighter;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Bullet : MonoBehaviour
 {
