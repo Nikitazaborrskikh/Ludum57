@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class BtnStartGame : MonoBehaviour
+public class TutorialBtn : MonoBehaviour
 {
     public AudioClip focusSound;
     private AudioSource audioSource;
@@ -18,7 +18,6 @@ public class BtnStartGame : MonoBehaviour
     private void StartGame()
     {
         audioSource.PlayOneShot(focusSound);
-        SceneManager.LoadScene("FirstCatScene");
+        // SceneManager.LoadScene("TestSceneShoot");
     }
-
 }
