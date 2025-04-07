@@ -61,6 +61,7 @@ namespace Enemies.Bosses
             }
             else if (Health <= 0 && currentPhase == 2)
             {
+                Die();
                 Destroy(gameObject);
             }
         }

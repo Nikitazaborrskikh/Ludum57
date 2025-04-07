@@ -1,5 +1,6 @@
 using Enemies;
 using UnityEngine;
+using Zenject;
 
 namespace Projectiles
 {
@@ -12,6 +13,7 @@ namespace Projectiles
     {
         [SerializeField] private float speed;
         [SerializeField] private float lifetime;
+        [Inject] PlayerStats playerStats;
         private float damage;
         private float timeAlive;
         private Vector3 direction;
@@ -45,7 +47,7 @@ namespace Projectiles
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player") /*Player.layer*/)
             {
-                //other.GetComponent<PlayerController>()?.TakeDamage(damage);
+                playerStats.TakeDamage(damage);
                 OnHit?.Invoke(other.gameObject);
                 ProjectilePool.Instance.ReturnToPool(this);
             }
