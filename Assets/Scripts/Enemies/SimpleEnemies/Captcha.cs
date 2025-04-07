@@ -1,5 +1,6 @@
 using Projectiles;
 using UnityEngine;
+using Zenject;
 
 namespace Enemies.SimpleEnemies
 {
@@ -11,8 +12,6 @@ namespace Enemies.SimpleEnemies
         public override float DistanceToPlayer => config.captchaStats.distanceToPlayer;
 
         private ProjectileType projectileType => config.captchaStats.projectileType;
-        
-
         private void Awake()
         {
             Health = config.captchaStats.health;
@@ -47,5 +46,6 @@ namespace Enemies.SimpleEnemies
                     MovementSpeed * Time.deltaTime);
             }
         }
+        
     }
 }

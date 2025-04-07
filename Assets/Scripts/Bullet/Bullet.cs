@@ -1,70 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
+using Enemies;
 using UnityEngine;
 using Zenject.SpaceFighter;
-using static UnityEngine.Rendering.DebugUI;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed; // Скорость пули
-    public float lifetime = 2f; // Время жизни пули
-    public string[] tagsNonBreaking = { "PlayerBullet" };
+    private float damage;
+    private bool canRicochet;
+    private bool canSniff;
 
-    private float timeAlive;
-    public GameObject shooter;
+    public void SetDamage(float dmg) => damage = dmg;
+    public void EnableRicochet() => canRicochet = true;
+    public void EnableSniffing() => canSniff = true;
 
-    private void OnEnable()
+    private void OnCollisionEnter(Collision collision)
     {
-        timeAlive = 0f; // Сброс времени жизни при активации
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log(collision.gameObject.name + " collided with " + collision.gameObject.name);
+            BaseEnemy enemy = collision.gameObject.GetComponent<BaseEnemy>();
+            enemy.TakeDamage(damage);
+            if (canRicochet)
+            {
+                GameObject nearestEnemy = FindNearestEnemy(collision.transform.position);
+                if (nearestEnemy)
+                {
+                    Vector3 direction = (nearestEnemy.transform.position - transform.position).normalized;
+                    GetComponent<Rigidbody>().velocity = direction * 10f; 
+                    nearestEnemy.GetComponent<BaseEnemy>().TakeDamage(damage);
+                    canRicochet = false;
+                }
+                else
+                {
+                    
+                    Destroy(gameObject);
+                }
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+        else if (canSniff && collision.gameObject.CompareTag("EnemyBullet"))
+        {
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
     }
 
-    private void Update()
+    private GameObject FindNearestEnemy(Vector3 position)
     {
-        timeAlive += Time.deltaTime;
-        if (timeAlive < lifetime)
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject nearest = null;
+        float minDist = Mathf.Infinity;
+        foreach (var enemy in enemies)
         {
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            float dist = Vector3.Distance(enemy.transform.position, position);
+            if (dist < minDist && dist > 0.1f)
+            {
+                minDist = dist;
+                nearest = enemy;
+            }
         }
-        else
-        {
-            gameObject.SetActive(false); // Деактивируем пулю после истечения времени жизни
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == shooter) return;
-        foreach (var tag in tagsNonBreaking)
-        {
-            if (other.CompareTag(tag)) return;
-        }
-        int damage = 0;
-        //switch (shooter.gameObject)
-        //{
-        //    case GameObject s when (s.GetComponent<PlayerShoot>() != null):
-        //        damage = shooter.gameObject.GetComponent<PlayerShoot>().damage;
-        //        break;
-        //    case GameObject s when (s.GetComponent<UserPageShoot>() != null):
-        //        damage = shooter.gameObject.GetComponent<UserPageShoot>().damage;
-        //        break;
-        //    case GameObject s when (s.GetComponent<TwoFactorAuthenticationShoot>() != null):
-        //        damage = shooter.gameObject.GetComponent<TwoFactorAuthenticationShoot>().damage;
-        //        break;
-        //    case GameObject s when (s.GetComponent<FirewallShoot>() != null):
-        //        damage = shooter.gameObject.GetComponent<FirewallShoot>().damage;
-        //        break;
-        //    case GameObject s when (s.GetComponent<CapthaShoot>() != null):
-        //        damage = shooter.gameObject.GetComponent<CapthaShoot>().damage;
-        //        break;
-        //    case GameObject s when (s.GetComponent<BackupShoot>() != null):
-        //        damage = shooter.gameObject.GetComponent<BackupShoot>().damage;
-        //        break;
-        //}
-        other.gameObject.GetComponent<Health>()?.TakeDamage(shooter.gameObject.GetComponent<Shoot>().damage);
-        gameObject.SetActive(false);
-    }
-
-    private void OnRenderObject()
-    {
+        return nearest;
     }
 }

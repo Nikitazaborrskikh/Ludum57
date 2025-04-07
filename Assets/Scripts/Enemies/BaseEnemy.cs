@@ -7,7 +7,7 @@ namespace Enemies
     {
         [SerializeField] protected EnemyConfig config;
         [SerializeField] private GameObject player;
-        
+        [Inject] protected UpgradeManager upgradeManager;
         public float Health { get; set; }
         public abstract float AttackSpeed { get; }
         public abstract float DamagePerProjectile { get; }
@@ -31,9 +31,11 @@ namespace Enemies
 
         public virtual void TakeDamage(float damage)
         {
+            Debug.Log("Aй бляяяяять");
             Health -= damage;
             if (Health <= 0)
             {
+                Die();
                 Destroy(gameObject);
             }
         }
@@ -43,7 +45,17 @@ namespace Enemies
 
         private Vector3 FindPlayerPosition()
         {
+            Debug.Log(player.transform.position);
             return player.transform.position;
+        }
+
+        public virtual void Die()
+        {
+            if (Random.value < 0.3f) // 30% шанс
+            {
+                upgradeManager.OfferUpgrades();
+            }
+            Destroy(gameObject);
         }
     }
 }

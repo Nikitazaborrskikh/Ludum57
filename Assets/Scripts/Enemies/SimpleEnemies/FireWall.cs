@@ -1,5 +1,6 @@
 using Projectiles;
 using UnityEngine;
+using Zenject;
 
 namespace Enemies.SimpleEnemies
 {
@@ -11,7 +12,7 @@ namespace Enemies.SimpleEnemies
         public override float DistanceToPlayer => config.firewallStats.distanceToPlayer;
         
         private ProjectileType projectileType => config.firewallStats.projectileType;
-        
+        [Inject] private UpgradeManager upgradeManager;
         private void Awake()
         {
             Health = config.firewallStats.health;

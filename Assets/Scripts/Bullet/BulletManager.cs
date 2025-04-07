@@ -9,19 +9,19 @@ public class BulletManager : MonoBehaviour
     public GameObject pullBullet;
     public static BulletManager Instance { get; private set; }
 
-    private List<Bullet> bullets = new List<Bullet>(); // Список активных пуль
+    private List<Bullet> bullets = new List<Bullet>(); // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 
     private void Awake()
     {
-        // Проверяем, существует ли уже экземпляр BulletManager
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ BulletManager
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject); // Уничтожаем дубликат
+            Destroy(gameObject); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             return;
         }
 
-        Instance = this; // Устанавливаем текущий экземпляр как единственный
-        DontDestroyOnLoad(gameObject); // Не уничтожаем объект при загрузке новой сцены
+        Instance = this; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        DontDestroyOnLoad(gameObject); // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     }
 
     private void CreateBullet(GameObject bullet)
@@ -55,7 +55,7 @@ public class BulletManager : MonoBehaviour
         var bullet = findFreeBullet(bulletPrefab);
         bullet.transform.position = newPositiion;
         bullet.transform.rotation = forward;
-        bullet.shooter = shooter;
+       // bullet.shooter = shooter;
         bullet.gameObject.SetActive(true);
     }
     public void ShootBullet(GameObject bulletPrefab, GameObject shooter, Vector3 newPositiion, Quaternion forward)
@@ -67,7 +67,7 @@ public class BulletManager : MonoBehaviour
 
     private void OnRenderObject()
     {
-        // Рисуем все активные пули
+        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         foreach (var bullet in bullets)
         {
             if (bullet.gameObject.activeInHierarchy)
