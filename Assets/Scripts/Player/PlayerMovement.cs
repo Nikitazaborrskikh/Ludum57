@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using Zenject;
 
-public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions
+public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IPausable
 {
     [Header("Movement Settings")]
     [SerializeField] private float dashDuration = 0.2f;
@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions
     private float lastTapTimeD = -1f;
 
     private Vector3 lastTargetPoint;
-
+    private bool isPaused;
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -67,9 +67,19 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions
         playerControls.Movement.Disable();
     }
 
+   public void Pause()
+    {
+        isPaused = true;
+        playerControls.Movement.Disable();
+    }
+    public void Resume()
+    {
+        isPaused = false;
+        playerControls.Movement.Enable();
+    }
     private void Update()
     {
-       
+        if (isPaused) return;
         if (playerStats == null)
         {
             Debug.LogError("PlayerStats not injected yet!", this);

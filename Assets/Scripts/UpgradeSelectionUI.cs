@@ -6,10 +6,12 @@ using Zenject;
 public class UpgradeSelectionUI : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
-    [SerializeField] private Image upgradeImage1;
-    [SerializeField] private Image upgradeImage2;
-    [SerializeField] private Image nameText1;
-    [SerializeField] private Image nameText2;
+    [SerializeField] private TMP_Text upgradeText1;
+    [SerializeField] private TMP_Text upgradeText2;
+    [SerializeField] private TMP_Text nameText1;
+    [SerializeField] private TMP_Text nameText2;
+    [SerializeField] private TMP_Text typeText1;
+    [SerializeField] private TMP_Text typeText2;
     [SerializeField] private Button button1;
     [SerializeField] private Button button2;
 
@@ -28,24 +30,32 @@ public class UpgradeSelectionUI : MonoBehaviour
         option1 = opt1;
         option2 = opt2;
 
-        upgradeImage1.sprite = opt1.icon;
-        upgradeImage2.sprite = opt2.icon;
-        nameText1.sprite = opt1.upgradeNameImg;
-        nameText2.sprite = opt2.upgradeNameImg;
-
+        upgradeText1.text = opt1.description;
+        upgradeText2.text = opt2.description;
+        nameText1.text = opt1.name;
+        nameText2.text = opt2.name;
+        typeText1.text = opt1.upgradeTypeKey;
+        typeText2.text = opt2.upgradeTypeKey;
+        
         button1.onClick.RemoveAllListeners();
         button2.onClick.RemoveAllListeners();
         button1.onClick.AddListener(() => SelectUpgrade(option1));
         button2.onClick.AddListener(() => SelectUpgrade(option2));
 
         panel.SetActive(true);
-        Time.timeScale = 0f; // Пауза игры
+        Time.timeScale = 0f; 
     }
 
     private void SelectUpgrade(UpgradeSO upgrade)
     {
         upgradeManager.ApplyUpgrade(upgrade);
         panel.SetActive(false);
-        Time.timeScale = 1f; // Возобновление игры
+        Time.timeScale = 1f; 
     }
+}
+
+public interface IPausable
+{
+     void Pause();
+     void Resume();
 }

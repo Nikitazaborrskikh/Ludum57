@@ -109,7 +109,9 @@ public class PlayerStats : IInitializable, IDisposable
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage;    
+        
+        currentHealth -= damage;  
+        Debug.Log(currentHealth);
     }
 
     private float CalculateStat(float baseValue, UpgradeType type)

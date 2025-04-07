@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: DDoS
   m_EditorClassIdentifier: 
   upgradeName: DDoS
-  upgradeNameImg: {fileID: 21300000, guid: 56b9379b09e9ba242aa41c58cabf55c9, type: 3}
-  description: {fileID: 21300000, guid: b591d661fddbf8a48913cdec3779809a, type: 3}
-  icon: {fileID: 21300000, guid: 8eebdd174f8ba114898f3882116390e2, type: 3}
+  upgradeTypeKey: LMB
+  description: Fires three projectiles in a small cone.
   upgradeType: 2
   value: 0
   effectType: 1

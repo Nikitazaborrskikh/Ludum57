@@ -20,9 +20,8 @@ public enum UpgradeEffectType
 public class UpgradeSO : ScriptableObject
 {
     public string upgradeName;
-    public Sprite upgradeNameImg;
-    public Sprite description;
-    public Sprite icon;
+    public string upgradeTypeKey;
+    public string description;
     public UpgradeType upgradeType;
     public float value;              // Для числовых изменений
     public UpgradeEffectType effectType;

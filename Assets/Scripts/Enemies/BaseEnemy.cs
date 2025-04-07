@@ -50,16 +50,15 @@ namespace Enemies
 
         private Vector3 FindPlayerPosition()
         {
-            Debug.Log(player.transform.position);
             return player.transform.position;
         }
 
         public virtual void Die()
         {
-            if (Random.value < 0.3f) // 30% шанс
-            {
+          //  if (Random.value < 0.3f) // 30% шанс
+           // {
                 upgradeManager.OfferUpgrades();
-            }
+           // }
             Destroy(gameObject);
         }
     }

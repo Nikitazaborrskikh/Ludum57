@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: CSRF
   m_EditorClassIdentifier: 
   upgradeName: CSRF
-  upgradeNameImg: {fileID: 21300000, guid: 32f3d27110ebf2648b50efc74f01fd2c, type: 3}
-  description: {fileID: 21300000, guid: 34d8a61b237e85e48a4982a4b66a2be7, type: 3}
-  icon: {fileID: 21300000, guid: 8eebdd174f8ba114898f3882116390e2, type: 3}
+  upgradeTypeKey: LMB
+  description: When hitting an enemy, the projectiles ricochet once into another
+    nearby enemy, if there is no one nearby, causing additional damage to the main
+    target.
   upgradeType: 2
   value: 0
   effectType: 1
