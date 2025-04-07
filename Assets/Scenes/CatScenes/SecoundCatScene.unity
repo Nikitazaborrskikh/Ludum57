@@ -869,6 +869,7 @@ MonoBehaviour:
   - {fileID: 2006811533}
   - {fileID: 1982693438}
   fadeDuration: 1
+  sceneAfterCatScene: Level2
 --- !u!4 &1061078773
 Transform:
   m_ObjectHideFlags: 0

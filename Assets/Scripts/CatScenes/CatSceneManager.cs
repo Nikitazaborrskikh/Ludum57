@@ -9,7 +9,7 @@ public class CanvasSwitcher : MonoBehaviour
     public CanvasGroup[] canvasGroups; // Массив CanvasGroup для всех канвасов
     private int currentCanvasIndex = 0; // Индекс текущего канваса
     public float fadeDuration = 1f; // Длительность затухания
-    public string sceneAfterCatScene = "TestSceneShoot";
+    public string sceneAfterCatScene;
 
     private bool isAnimation = false;
 
