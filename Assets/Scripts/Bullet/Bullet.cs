@@ -9,6 +9,24 @@ public class Bullet : MonoBehaviour
     private float damage;
     private bool canRicochet;
     private bool canSniff;
+    private Rigidbody rb;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            Debug.Log($"Bullet Awake - Initial Velocity: {rb.velocity}, UseGravity: {rb.useGravity}");
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (rb != null)
+        {
+            Debug.Log($"Bullet FixedUpdate - Current Velocity: {rb.velocity}");
+        }
+    }
 
     public void SetDamage(float dmg) => damage = dmg;
     public void EnableRicochet() => canRicochet = true;
@@ -16,9 +34,9 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log($"Bullet collided with: {collision.gameObject.name}, Tag: {collision.gameObject.tag}");
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log(collision.gameObject.name + " collided with " + collision.gameObject.name);
             BaseEnemy enemy = collision.gameObject.GetComponent<BaseEnemy>();
             enemy.TakeDamage(damage);
             if (canRicochet)
@@ -27,13 +45,12 @@ public class Bullet : MonoBehaviour
                 if (nearestEnemy)
                 {
                     Vector3 direction = (nearestEnemy.transform.position - transform.position).normalized;
-                    GetComponent<Rigidbody>().velocity = direction * 10f; 
+                    rb.velocity = direction * 10f;
                     nearestEnemy.GetComponent<BaseEnemy>().TakeDamage(damage);
                     canRicochet = false;
                 }
                 else
                 {
-                    
                     Destroy(gameObject);
                 }
             }
