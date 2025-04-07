@@ -24,14 +24,14 @@ public class PlayerShooting : MonoBehaviour
     {
         Vector3 direction = GetShootDirection();
         float currentDamage = playerStats.Damage;
-        float currentBulletSpeed = bulletSpeed;
+        float currentBulletSpeed = bulletSpeed; // Локальная копия
 
         if (playerStats.SpecialEffects.ContainsKey("SQLi"))
         {
             if (isPrimary && secondaryFireTimer > 0) currentDamage *= 1.5f;
             if (!isPrimary && primaryFireTimer > 0) currentDamage *= 1.5f;
         }
-        
+    
         if (playerStats.SpecialEffects.ContainsKey("Zero-Day") && justDashed)
         {
             currentDamage *= 1.5f;
@@ -87,7 +87,7 @@ public class PlayerShooting : MonoBehaviour
 
     private void ShootSingle(Vector3 direction, GameObject bulletPrefab, float damage, Vector3? spawnPosition = null)
     {
-        Vector3 position = spawnPosition ?? (bulletSpawnPoint.position + direction * 0.5f);
+        Vector3 position = spawnPosition ?? bulletSpawnPoint.position;
         GameObject bullet = Instantiate(bulletPrefab, position, Quaternion.LookRotation(direction));
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
     
@@ -97,21 +97,13 @@ public class PlayerShooting : MonoBehaviour
             return;
         }
 
+        // Проверка значений перед установкой velocity
         Debug.Log($"ShootSingle - Position: {position}, Direction: {direction}, BulletSpeed: {bulletSpeed}, Velocity: {direction * bulletSpeed}");
-        rb.useGravity = false; // Отключаем гравитацию
+    
         rb.velocity = direction * bulletSpeed;
-        rb.angularVelocity = Vector3.zero; // Убираем вращение
-        Debug.Log($"Velocity после установки: {rb.velocity}");
 
-        Collider bulletCollider = bullet.GetComponent<Collider>();
-        if (bulletCollider != null && bulletSpawnPoint.parent != null)
-        {
-            Collider playerCollider = bulletSpawnPoint.parent.GetComponent<Collider>();
-            if (playerCollider != null)
-            {
-                Physics.IgnoreCollision(bulletCollider, playerCollider);
-            }
-        }
+        // Проверка velocity после установки
+        Debug.Log($"Velocity после установки: {rb.velocity}");
 
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         if (bulletScript) bulletScript.SetDamage(damage);
