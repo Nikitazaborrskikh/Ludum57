@@ -1568,6 +1568,8 @@ MonoBehaviour:
   coolDownStandartAttack: 0
   coolDownLargeAttack: 0
   shootSound: {fileID: 8300000, guid: c815c11a132d23843ba27e3f1f07927a, type: 3}
+  audioSource: {fileID: 0}
+  timeAfterLastShoot: 0
 --- !u!82 &1797037725
 AudioSource:
   m_ObjectHideFlags: 0
