@@ -13,9 +13,20 @@ public class PlayerShooting : MonoBehaviour
     private float primaryFireTimer;
     private float secondaryFireTimer;
     private bool justDashed; 
+    private bool isPaused;
+    
+    public void Pause()
+    {
+        isPaused = true;
+    }
 
+    public void Resume()
+    {
+        isPaused = false;
+    }
     private void Update()
     {
+        if (isPaused) return;
         primaryFireTimer -= Time.deltaTime;
         secondaryFireTimer -= Time.deltaTime;
     }

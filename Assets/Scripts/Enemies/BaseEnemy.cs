@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 namespace Enemies
 {
-    public abstract class BaseEnemy : MonoBehaviour, IEnemy
+    public abstract class BaseEnemy : MonoBehaviour, IEnemy, IPausable
     {
         [SerializeField] protected EnemyConfig config;
         [Inject] protected UpgradeManager upgradeManager;
@@ -16,7 +16,7 @@ namespace Enemies
         
         private GameObject player;
         private float attackTimer;
-
+        private bool isPaused;
         private void Start()
         {
             player = GameObject.FindGameObjectWithTag("Player");
@@ -24,6 +24,7 @@ namespace Enemies
 
         protected virtual void Update()
         {
+            if (isPaused) return;
             attackTimer += Time.deltaTime;
             Vector3 playerPos = FindPlayerPosition();
             Move(playerPos);
@@ -35,6 +36,14 @@ namespace Enemies
             }
         }
 
+        public void Pause()
+        {
+           isPaused = true;
+        }
+        public void Resume()
+        {
+            isPaused = false;
+        }
         public virtual void TakeDamage(float damage)
         {
             Debug.Log("Aй бляяяяять");
@@ -50,16 +59,15 @@ namespace Enemies
 
         private Vector3 FindPlayerPosition()
         {
-            Debug.Log(player.transform.position);
             return player.transform.position;
         }
 
         public virtual void Die()
         {
-            if (Random.value < 0.3f) // 30% шанс
-            {
+          //  if (Random.value < 0.3f) // 30% шанс
+           // {
                 upgradeManager.OfferUpgrades();
-            }
+           // }
             Destroy(gameObject);
         }
     }

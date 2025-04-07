@@ -9,10 +9,12 @@ public class UpgradeManager : IInitializable
 {
     [Inject] private PlayerStats playerStats;
     [Inject] private UpgradeSelectionUI upgradeSelectionUI;
-    private List<UpgradeSO> allUpgrades; // Загружается из JSON
+    private List<UpgradeSO> allUpgrades; 
 
     public void Initialize()
     {
+        PlayerPrefs.DeleteAll();
+        Debug.Log("Initializing upgrade manager");
         allUpgrades = LoadUpgradesFromJson();
     }
 
@@ -34,6 +36,7 @@ public class UpgradeManager : IInitializable
     {
         string json = PlayerPrefs.GetString("Upgrades", "");
         if (string.IsNullOrEmpty(json)) return Resources.LoadAll<UpgradeSO>("Upgrades").ToList();
+        Debug.Log(json);
         return JsonUtility.FromJson<UpgradeData>(json).ToUpgradeSOList();
     }
 
