@@ -1,42 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShoot : Shoot
+namespace Player
 {
-    public GameObject bulletStandartPrefab; // Префаб пули
-    public GameObject bulletLargePrefab; // Префаб пули
-    public Vector3 offset;
-
-    public float coolDownStandartAttack = 1f;
-    public float coolDownLargeAttack = 1.5f;
-
-    public AudioClip shootSound;
-    private AudioSource audioSource;
-
-    private float timeAfterLastShoot;
-
-    private void Start()
+    public class PlayerShoot : Shoot
     {
-        audioSource = GetComponent<AudioSource>();
-    }
+        public GameObject bulletStandartPrefab; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+        public GameObject bulletLargePrefab; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+        public Vector3 offset;
 
-    void Update()
-    {
-        timeAfterLastShoot += Time.deltaTime;    
-        if (Input.GetButtonDown("Fire1") && timeAfterLastShoot >= coolDownStandartAttack)
+        public float coolDownStandartAttack = 1f;
+        public float coolDownLargeAttack = 1.5f;
+
+        public AudioClip shootSound;
+        private AudioSource audioSource;
+
+        private float timeAfterLastShoot;
+
+        private void Start()
         {
-            audioSource.PlayOneShot(shootSound);
-            BulletManager.Instance.ShootBullet(bulletStandartPrefab, gameObject, transform.position + transform.rotation * offset, transform.rotation);
-            timeAfterLastShoot = 0f;
+            audioSource = GetComponent<AudioSource>();
         }
-        if (Input.GetButtonDown("Fire2") && timeAfterLastShoot >= coolDownLargeAttack)
+
+        void Update()
         {
-            audioSource.PlayOneShot(shootSound);
-            BulletManager.Instance.ShootBullet(bulletLargePrefab, gameObject, transform.position + transform.rotation * offset, transform.rotation);
-            timeAfterLastShoot = 0f;
+            timeAfterLastShoot += Time.deltaTime;    
+            if (Input.GetButtonDown("Fire1") && timeAfterLastShoot >= coolDownStandartAttack)
+            {
+                audioSource.PlayOneShot(shootSound);
+                BulletManager.Instance.ShootBullet(bulletStandartPrefab, gameObject, transform.position + transform.rotation * offset, transform.rotation);
+                timeAfterLastShoot = 0f;
+            }
+            if (Input.GetButtonDown("Fire2") && timeAfterLastShoot >= coolDownLargeAttack)
+            {
+                audioSource.PlayOneShot(shootSound);
+                BulletManager.Instance.ShootBullet(bulletLargePrefab, gameObject, transform.position + transform.rotation * offset, transform.rotation);
+                timeAfterLastShoot = 0f;
+            }
         }
+
+
     }
-
-
 }

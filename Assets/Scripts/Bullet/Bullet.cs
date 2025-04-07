@@ -30,6 +30,7 @@ public class Bullet : MonoBehaviour
                     GetComponent<Rigidbody>().velocity = direction * 10f; 
                     nearestEnemy.GetComponent<BaseEnemy>().TakeDamage(damage);
                     canRicochet = false;
+                    Destroy(gameObject);
                 }
                 else
                 {
@@ -45,6 +46,10 @@ public class Bullet : MonoBehaviour
         else if (canSniff && collision.gameObject.CompareTag("EnemyBullet"))
         {
             Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
+        else
+        {
             Destroy(gameObject);
         }
     }

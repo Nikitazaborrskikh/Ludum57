@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using Zenject;
 
 public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions
@@ -10,7 +11,8 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions
     [SerializeField] private float dashCooldown = 1f;
 
     [Header("Rotation Settings")]
-    [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private float maxDistance = 5f;
+    [SerializeField] private float rotationSpeedAngle = 200f;
     [SerializeField] private float rotationDeadZone = 0.1f;
     private PlayerStats playerStats;
     [Inject]
@@ -103,7 +105,6 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions
         playerShooting.OnSecondaryAttack(context);
     }
     
-
     private void RotateTowardsCursor()
     {
         Vector2 mousePosition = Mouse.current.position.ReadValue();
@@ -116,15 +117,46 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions
             Vector3 targetPoint = ray.GetPoint(distance);
             targetPoint.y = transform.position.y;
 
+            // Ограничиваем расстояние от игрока до targetPoint
+            Vector3 directionToTarget = (targetPoint - transform.position);
+            if (directionToTarget.magnitude > maxDistance)
+            {
+                targetPoint = transform.position + directionToTarget.normalized * maxDistance;
+            }
+
+            // Проверяем мёртвую зону
             if (Vector3.Distance(targetPoint, lastTargetPoint) > rotationDeadZone)
             {
                 Vector3 direction = (targetPoint - transform.position).normalized;
                 Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-                lastTargetPoint = targetPoint;
+                
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeedAngle * Time.deltaTime);
+
+                lastTargetPoint = targetPoint; // Обновляем последнюю точку
             }
         }
     }
+    // private void RotateTowardsCursor()
+    // {
+    //     Vector2 mousePosition = Mouse.current.position.ReadValue();
+    //     Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+    //     Plane plane = new Plane(Vector3.up, transform.position);
+    //     float distance;
+    //
+    //     if (plane.Raycast(ray, out distance))
+    //     {
+    //         Vector3 targetPoint = ray.GetPoint(distance);
+    //         targetPoint.y = transform.position.y;
+    //
+    //         if (Vector3.Distance(targetPoint, lastTargetPoint) > rotationDeadZone)
+    //         {
+    //             Vector3 direction = (targetPoint - transform.position).normalized;
+    //             Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+    //             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeedAngle * Time.deltaTime);
+    //             lastTargetPoint = targetPoint;
+    //         }
+    //     }
+    // }
 
     private void HandleMovement()
     {

@@ -75,14 +75,15 @@ public class PlayerShooting : MonoBehaviour
 
     private Vector3 GetShootDirection()
     {
-        Vector2 mousePosition = Mouse.current.position.ReadValue();
-        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
-        Plane plane = new Plane(Vector3.up, transform.position);
-        float distance;
-        plane.Raycast(ray, out distance);
-        Vector3 targetPoint = ray.GetPoint(distance);
-        targetPoint.y = bulletSpawnPoint.position.y;
-        return (targetPoint - bulletSpawnPoint.position).normalized;
+        // Vector2 mousePosition = Mouse.current.position.ReadValue();
+        // Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+        // Plane plane = new Plane(Vector3.up, transform.position);
+        // float distance;
+        // plane.Raycast(ray, out distance);
+        // Vector3 targetPoint = ray.GetPoint(distance);
+        // targetPoint.y = bulletSpawnPoint.position.y;
+        // return (targetPoint - bulletSpawnPoint.position).normalized;
+        return transform.forward;
     }
 
     private void ShootSingle(Vector3 direction, GameObject bulletPrefab, float damage, Vector3? spawnPosition = null)

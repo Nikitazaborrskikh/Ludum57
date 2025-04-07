@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CapthaShoot : Shoot
 {
-    public GameObject bulletPrefab; // Префаб пули
+    public GameObject bulletPrefab; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     public Vector3 offset;
 
     public float coolDownAttack = 1f;

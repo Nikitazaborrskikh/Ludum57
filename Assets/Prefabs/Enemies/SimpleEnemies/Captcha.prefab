@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5263544475706805381}
   m_Layer: 0
   m_Name: Captcha
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -147,4 +147,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 29ca65abe831a744fb0b0308a2ee90ce, type: 2}
-  player: {fileID: 2884022045168728141, guid: f6975621dad0c0a4a96e2b26305ec253, type: 3}

@@ -5,7 +5,7 @@ using Zenject.SpaceFighter;
 
 public class UserPageShoot : Shoot
 {
-    public GameObject bulletPrefab; // Префаб пули
+    public GameObject bulletPrefab; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     public Vector3 offset1;
     public Vector3 offset2;
 

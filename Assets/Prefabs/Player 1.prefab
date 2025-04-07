@@ -650,7 +650,8 @@ MonoBehaviour:
   dashDuration: 0.2
   doubleTapTime: 0.3
   dashCooldown: 1
-  rotationSpeed: 10
+  maxDistance: 1
+  rotationSpeedAngle: 450
   rotationDeadZone: 0.1
   playerShooting: {fileID: 8781376872167158430}
 --- !u!114 &8781376872167158430
