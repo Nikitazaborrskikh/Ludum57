@@ -9,7 +9,7 @@ namespace Projectiles
         Small,
         Large
     }
-    public class Projectile : MonoBehaviour
+    public class Projectile : MonoBehaviour , IPausable
     {
         [SerializeField] private float speed;
         [SerializeField] private float lifetime;
@@ -18,6 +18,7 @@ namespace Projectiles
         private float timeAlive;
         private Vector3 direction;
         public BaseEnemy owner;
+        private bool isPaused;
 
         public delegate void ProjectileHitHandler(GameObject target);
         public event ProjectileHitHandler OnHit;
@@ -32,8 +33,20 @@ namespace Projectiles
             gameObject.SetActive(true);
         }
 
+        public void Pause()
+        {
+            isPaused = true;
+        }
+         
+       public void Resume()
+        {
+            
+            isPaused = false;
+        }
+
         private void Update()
         {
+            if (isPaused) return;
             transform.position += direction * speed * Time.deltaTime;
             timeAlive += Time.deltaTime;
             if (timeAlive >= lifetime)

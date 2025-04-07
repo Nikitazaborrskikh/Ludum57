@@ -13,6 +13,7 @@ public class UpgradeManager : IInitializable
 
     public void Initialize()
     {
+        PlayerPrefs.DeleteAll();
         Debug.Log("Initializing upgrade manager");
         allUpgrades = LoadUpgradesFromJson();
     }

@@ -70,12 +70,12 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
    public void Pause()
     {
         isPaused = true;
-        playerControls.Movement.Disable();
+        playerControls.Disable();
     }
     public void Resume()
     {
         isPaused = false;
-        playerControls.Movement.Enable();
+        playerControls.Enable();
     }
     private void Update()
     {

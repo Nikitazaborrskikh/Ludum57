@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -19,10 +21,12 @@ public class UpgradeSelectionUI : MonoBehaviour
 
     private UpgradeSO option1;
     private UpgradeSO option2;
+    private List<IPausable> pausables = new List<IPausable>();
 
     private void Awake()
     {
         panel.SetActive(false);
+        pausables.AddRange(FindObjectsOfType<MonoBehaviour>().OfType<IPausable>());
     }
 
     public void ShowUpgradeOptions(UpgradeSO opt1, UpgradeSO opt2)
@@ -43,14 +47,33 @@ public class UpgradeSelectionUI : MonoBehaviour
         button2.onClick.AddListener(() => SelectUpgrade(option2));
 
         panel.SetActive(true);
-        Time.timeScale = 0f; 
+        PauseGame();
     }
 
     private void SelectUpgrade(UpgradeSO upgrade)
     {
         upgradeManager.ApplyUpgrade(upgrade);
         panel.SetActive(false);
-        Time.timeScale = 1f; 
+        ResumeGame();
+    }
+    private void PauseGame()
+    {
+        foreach (var pausable in pausables)
+        {
+            pausable.Pause();
+        }
+    }
+
+    public void LogButton()
+    {
+        Debug.Log("Button Clicked");
+    }
+    private void ResumeGame()
+    {
+        foreach (var pausable in pausables)
+        {
+            pausable.Resume();
+        }
     }
 }
 

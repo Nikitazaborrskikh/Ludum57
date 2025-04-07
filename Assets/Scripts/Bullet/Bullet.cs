@@ -48,6 +48,11 @@ public class Bullet : MonoBehaviour
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
+        else if (collision.gameObject.CompareTag("PlayerBullet") || collision.gameObject.CompareTag("Player"))
+        {
+            
+            return;
+        }
         else
         {
             Destroy(gameObject);
