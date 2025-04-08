@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class TutorialBtn : MonoBehaviour
 {
+    public GameObject managers;
     private void Start()
     {
         Button button = GetComponent<Button>();
@@ -14,6 +15,6 @@ public class TutorialBtn : MonoBehaviour
 
     private void StartGame()
     {
-        SceneManager.LoadScene("Level1");
+        StartCoroutine(managers.GetComponent<LevelsManager>().BlinkAndSwitchScene());
     }
 }

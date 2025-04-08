@@ -11,6 +11,8 @@ public class CanvasSwitcher : MonoBehaviour
     public float fadeDuration = 1f; // Длительность затухания
     public string sceneAfterCatScene;
 
+    public bool isTutorial;
+
     private bool isAnimation = false;
 
     void Start()
@@ -39,12 +41,17 @@ public class CanvasSwitcher : MonoBehaviour
 
     public void SwitchCanvas()
     {
+        if (currentCanvasIndex >= canvasGroups.Length-1 && isTutorial)
+        {
+            return;
+        }
         isAnimation = true;
         StartCoroutine(FadeCanvas(currentCanvasIndex, false)); // Затухаем текущий канвас
         currentCanvasIndex++;
-        if (currentCanvasIndex >= canvasGroups.Length-1)
+        if (currentCanvasIndex >= canvasGroups.Length)
         {
-            SceneManager.LoadScene(sceneAfterCatScene);
+            StartCoroutine(gameObject.GetComponent<LevelsManager>().BlinkAndSwitchScene());
+            return;
         }
         StartCoroutine(FadeCanvas(currentCanvasIndex, true)); // Появляем следующий канвас
     }
