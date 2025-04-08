@@ -986,6 +986,7 @@ MonoBehaviour:
   - {fileID: 1982693438}
   fadeDuration: 1
   sceneAfterCatScene: Level3
+  isTutorial: 0
 --- !u!4 &1061078773
 Transform:
   m_ObjectHideFlags: 0
@@ -1015,8 +1016,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blinkImage: {fileID: 874127371}
   blinkDuration: 0.5
-  isStart: 0
-  sceneAfterLevel: 
+  isStart: 1
+  isLevel: 0
+  sceneAfterLevel: Level3
 --- !u!1 &1145223852
 GameObject:
   m_ObjectHideFlags: 0

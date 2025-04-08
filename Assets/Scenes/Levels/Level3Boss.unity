@@ -4743,6 +4743,7 @@ MonoBehaviour:
   blinkImage: {fileID: 997245024}
   blinkDuration: 0.5
   isStart: 1
+  isLevel: 1
   sceneAfterLevel: FourthCatScene
 --- !u!4 &1977179800
 Transform:

@@ -1,5 +1,7 @@
+using Enemies;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -10,15 +12,43 @@ public class LevelsManager : MonoBehaviour
     public float blinkDuration = 0.5f; // Длительность моргания
 
     public bool isStart;
+    public bool isLevel;
 
     public string sceneAfterLevel;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         if (isStart)
         {
             StartCoroutine(BlinkScene());
         }        
+    }
+
+    private void Update()
+    {
+        if (isLevel && !availabilityEnemys())
+        {
+            StartCoroutine(BlinkAndSwitchScene());
+        }
+    }
+
+    private bool availabilityEnemys()
+    {
+        // Получаем все объекты в текущей сцене
+        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>(true); // true для поиска неактивных объектов
+
+        List<GameObject> matchingObjects = new List<GameObject>();
+
+        foreach (GameObject obj in allObjects)
+        {
+            // Получаем компонент по имени
+            Component component = obj.GetComponent<BaseEnemy>();
+            if (component != null) 
+            { 
+                return true;
+            }
+        }
+        return false;
     }
 
     public IEnumerator BlinkScene()

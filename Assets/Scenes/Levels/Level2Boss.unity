@@ -982,7 +982,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blinkImage: {fileID: 2013886187}
   blinkDuration: 0.5
-  isStart: 0
+  isStart: 1
+  isLevel: 1
   sceneAfterLevel: ThirdCatScene
 --- !u!4 &491210803
 Transform:

@@ -4390,6 +4390,7 @@ MonoBehaviour:
   blinkImage: {fileID: 937276071}
   blinkDuration: 0.5
   isStart: 1
+  isLevel: 1
   sceneAfterLevel: Level1Boss
 --- !u!4 &1137621140
 Transform:
