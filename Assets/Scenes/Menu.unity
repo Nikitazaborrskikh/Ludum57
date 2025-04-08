@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 666c12f1423222940aebdc2eb89ad032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound: {fileID: 8300000, guid: a9c06690a7028d343840a4b0c1f2cf0d, type: 3}
+  sound: {fileID: 8300000, guid: 448fca8d9b8d2574cadfd608611b06b6, type: 3}
 --- !u!95 &3806452
 Animator:
   serializedVersion: 5
@@ -501,7 +501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 666c12f1423222940aebdc2eb89ad032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound: {fileID: 8300000, guid: a9c06690a7028d343840a4b0c1f2cf0d, type: 3}
+  sound: {fileID: 8300000, guid: 448fca8d9b8d2574cadfd608611b06b6, type: 3}
 --- !u!82 &595282300
 AudioSource:
   m_ObjectHideFlags: 0
@@ -863,7 +863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c6afb6d2ef385e43b923f775eb2e0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  focusSound: {fileID: 8300000, guid: a4378f37b1598224d89a8a14f0cc7a9d, type: 3}
+  focusSound: {fileID: 8300000, guid: 1904551d55ce5684fa7c1eb5bc38070d, type: 3}
 --- !u!82 &649824870
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1189,7 +1189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsMenu: {fileID: 764765215}
-  focusSound: {fileID: 8300000, guid: a4378f37b1598224d89a8a14f0cc7a9d, type: 3}
+  focusSound: {fileID: 8300000, guid: 1904551d55ce5684fa7c1eb5bc38070d, type: 3}
 --- !u!82 &933848395
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1394,7 +1394,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 35b3b6ac7170f0a4282c33f162807265, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 45686cc44a79aac48a602cc3a691b888, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2214,7 +2214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 666c12f1423222940aebdc2eb89ad032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound: {fileID: 8300000, guid: a9c06690a7028d343840a4b0c1f2cf0d, type: 3}
+  sound: {fileID: 8300000, guid: 448fca8d9b8d2574cadfd608611b06b6, type: 3}
 --- !u!95 &1995867606
 Animator:
   serializedVersion: 5
