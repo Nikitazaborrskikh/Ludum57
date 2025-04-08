@@ -122,7 +122,7 @@ public class PlayerStats : IInitializable, IDisposable
 
     private void Die()
     {
-        SceneManager.LoadScene();
+        SceneManager.LoadScene("Menu");
         Dispose();
     }
 
