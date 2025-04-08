@@ -1,112 +1,98 @@
 using System.Collections.Generic;
+using Enemies;
 using UnityEngine;
+using Zenject;
+using Projectiles;
 
-namespace Projectiles
+public class ProjectilePool : MonoBehaviour
 {
-    public class ProjectilePool : MonoBehaviour
+    public static ProjectilePool Instance { get; private set; }
+
+    [SerializeField] private int initialPoolSize = 20;
+    [SerializeField] private int expansionSize = 10;
+
+    [Inject] private DiContainer container; // Для инъекции зависимостей
+
+    private Dictionary<GameObject, Queue<Projectile>> pools; // Пул по префабам
+    public Dictionary<GameObject, List<Projectile>> allProjectiles; // Все снаряды по префабам
+
+    private void Awake()
     {
-        public static ProjectilePool Instance { get; private set; }
-
-        [SerializeField] private GameObject smallProjectilePrefab;
-        [SerializeField] private GameObject largeProjectilePrefab;
-        [SerializeField] private int initialPoolSize = 20;
-        [SerializeField] private int expansionSize = 10; // Количество объектов для расширения пула
-
-        private Dictionary<ProjectileType, Queue<Projectile>> pools;
-        public Dictionary<ProjectileType, List<Projectile>> allProjectiles; // Для отслеживания всех объектов
-
-        private void Awake()
+        if (Instance == null)
         {
-            if (Instance == null)
-            {
-                Instance = this;
-                InitializePool();
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            Instance = this;
+            InitializePool();
         }
-
-        private void InitializePool()
+        else
         {
-            pools = new Dictionary<ProjectileType, Queue<Projectile>>
-            {
-                { ProjectileType.Small, new Queue<Projectile>() },
-                { ProjectileType.Large, new Queue<Projectile>() }
-            };
+            Destroy(gameObject);
+        }
+    }
 
-            allProjectiles = new Dictionary<ProjectileType, List<Projectile>>
-            {
-                { ProjectileType.Small, new List<Projectile>() },
-                { ProjectileType.Large, new List<Projectile>() }
-            };
+    private void InitializePool()
+    {
+        pools = new Dictionary<GameObject, Queue<Projectile>>();
+        allProjectiles = new Dictionary<GameObject, List<Projectile>>();
+    }
 
-            // Создаем начальное количество объектов для каждого типа
+    private void AddProjectileToPool(GameObject prefab, ProjectileType type)
+    {
+        GameObject projectileObj = container.InstantiatePrefab(prefab, transform); // Создаём через Zenject
+        Projectile projectile = projectileObj.GetComponent<Projectile>();
+        container.Inject(projectile); // Инжектируем зависимости (PlayerStats)
+        projectile.Deactivate();
+        pools[prefab].Enqueue(projectile);
+        allProjectiles[prefab].Add(projectile);
+    }
+
+    public Projectile GetProjectile(GameObject prefab, ProjectileType type, Vector3 position, Quaternion rotation)
+    {
+        if (!pools.ContainsKey(prefab))
+        {
+            pools[prefab] = new Queue<Projectile>();
+            allProjectiles[prefab] = new List<Projectile>();
+            // Инициализируем пул для нового префаба
             for (int i = 0; i < initialPoolSize; i++)
             {
-                AddProjectileToPool(ProjectileType.Small, smallProjectilePrefab);
-                AddProjectileToPool(ProjectileType.Large, largeProjectilePrefab);
+                AddProjectileToPool(prefab, type);
             }
         }
 
-        private void AddProjectileToPool(ProjectileType type, GameObject prefab)
-        {
-            GameObject projectileObj = Instantiate(prefab, transform);
-            projectileObj.SetActive(false);
-            Projectile projectile = projectileObj.GetComponent<Projectile>();
-            pools[type].Enqueue(projectile);
-            allProjectiles[type].Add(projectile); // Добавляем в список всех объектов
-        }
+        Queue<Projectile> pool = pools[prefab];
+        List<Projectile> allOfType = allProjectiles[prefab];
 
-        public Projectile GetProjectile(ProjectileType type, Vector3 position, Quaternion rotation)
+        if (pool.Count == 0)
         {
-            Queue<Projectile> pool = pools[type];
-            List<Projectile> allOfType = allProjectiles[type];
-
-            // Проверяем, есть ли свободные объекты в пуле
-            if (pool.Count == 0)
+            bool allActive = true;
+            foreach (Projectile proj in allOfType)
             {
-                // Проверяем, все ли объекты активны
-                bool allActive = true;
-                foreach (Projectile proj in allOfType)
+                if (!proj.gameObject.activeSelf)
                 {
-                    if (!proj.gameObject.activeSelf)
-                    {
-                        allActive = false;
-                        pool.Enqueue(proj); // Добавляем неактивный объект обратно в очередь
-                        break;
-                    }
-                }
-
-                // Если все объекты активны, расширяем пул
-                if (allActive)
-                {
-                    for (int i = 0; i < expansionSize; i++)
-                    {
-                        GameObject prefab = type switch
-                        {
-                            ProjectileType.Small => smallProjectilePrefab,
-                            ProjectileType.Large => largeProjectilePrefab,
-                            _ => smallProjectilePrefab
-                        };
-                        AddProjectileToPool(type, prefab);
-                    }
-
-                    Debug.Log($"Expanded {type} projectile pool by {expansionSize}");
+                    allActive = false;
+                    pool.Enqueue(proj);
+                    break;
                 }
             }
 
-            Projectile projectile = pool.Dequeue();
-            projectile.transform.position = position;
-            projectile.transform.rotation = rotation;
-            return projectile;
+            if (allActive)
+            {
+                for (int i = 0; i < expansionSize; i++)
+                {
+                    AddProjectileToPool(prefab, type);
+                }
+                Debug.Log($"Expanded pool for prefab {prefab.name} by {expansionSize}");
+            }
         }
 
-        public void ReturnToPool(Projectile projectile)
-        {
-            projectile.Deactivate();
-            pools[projectile.Type].Enqueue(projectile);
-        }
+        Projectile projectile = pool.Dequeue();
+        projectile.transform.position = position;
+        projectile.transform.rotation = rotation;
+        return projectile;
+    }
+
+    public void ReturnToPool(Projectile projectile)
+    {
+        projectile.Deactivate();
+        pools[projectile.Prefab].Enqueue(projectile); // Используем свойство Prefab напрямую
     }
 }

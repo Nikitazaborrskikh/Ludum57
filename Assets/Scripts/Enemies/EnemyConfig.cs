@@ -10,13 +10,14 @@ namespace Enemies
         public class EnemyStats
         {
             public ProjectileType projectileType;
+            public GameObject projectilePrefab; // Добавляем префаб снаряда
             public float attackSpeed;
             public float damagePerProjectile;
-            public float movementSpeedDivider; // Делитель скорости относительно игрока
+            public float movementSpeedDivider;
             public float distanceToPlayer;
             public float health;
         }
-        
+
         [System.Serializable]
         public class TwoFactorAuthStats
         {
@@ -24,12 +25,10 @@ namespace Enemies
             public EnemyStats phase2;
         }
 
-        // Рядовые враги
         public EnemyStats captchaStats;
         public EnemyStats userPageStats;
         public EnemyStats firewallStats;
 
-        // Боссы
         public EnemyStats encryptionStats;
         public TwoFactorAuthStats twoFactorAuth;
         public EnemyStats backupStats;

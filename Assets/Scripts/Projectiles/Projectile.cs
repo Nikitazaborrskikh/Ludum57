@@ -9,38 +9,55 @@ namespace Projectiles
         Small,
         Large
     }
-    public class Projectile : MonoBehaviour , IPausable
+
+    public class Projectile : MonoBehaviour, IPausable
     {
         [SerializeField] private float speed;
         [SerializeField] private float lifetime;
-        [Inject] PlayerStats playerStats;
+        [Inject] private PlayerStats playerStats;
         private float damage;
         private float timeAlive;
         private Vector3 direction;
         public BaseEnemy owner;
         private bool isPaused;
+        private GameObject prefab; // Ссылка на префаб для возврата в правильный пул
 
         public delegate void ProjectileHitHandler(GameObject target);
         public event ProjectileHitHandler OnHit;
         public ProjectileType Type { get; private set; }
+        public GameObject Prefab => prefab;
 
-        public void Initialize(Vector3 dir, float dmg, ProjectileType type, BaseEnemy shooter)
+        private void Awake()
         {
-            direction = dir;
-            damage = dmg;
+            if (playerStats == null)
+            {
+                Debug.LogError($"playerStats is null in Projectile Awake on {gameObject.name}");
+            }
+            else
+            {
+                Debug.Log($"playerStats injected successfully in Projectile Awake on {gameObject.name}");
+            }
+        }
+
+        public void Initialize(GameObject prefab, Vector3 dir, Quaternion rotation, float dmg, ProjectileType type, BaseEnemy shooter)
+        {
+            this.prefab = prefab;
             Type = type;
+            direction = dir;
+            transform.rotation = rotation;
+            damage = dmg;
             owner = shooter;
             gameObject.SetActive(true);
+            timeAlive = 0f;
         }
 
         public void Pause()
         {
             isPaused = true;
         }
-         
-       public void Resume()
+
+        public void Resume()
         {
-            
             isPaused = false;
         }
 
@@ -58,14 +75,19 @@ namespace Projectiles
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Player") /*Player.layer*/)
+            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
+                if (playerStats == null)
+                {
+                    Debug.LogError($"playerStats is null in OnTriggerEnter on {gameObject.name}");
+                    return;
+                }
                 playerStats.TakeDamage(damage);
                 OnHit?.Invoke(other.gameObject);
                 ProjectilePool.Instance.ReturnToPool(this);
             }
         }
-        
+
         public void Deactivate()
         {
             gameObject.SetActive(false);

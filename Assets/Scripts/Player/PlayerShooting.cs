@@ -108,14 +108,7 @@ public class PlayerShooting : MonoBehaviour
             Debug.LogError("Rigidbody отсутствует на bulletPrefab!");
             return;
         }
-
-        // Проверка значений перед установкой velocity
-        Debug.Log($"ShootSingle - Position: {position}, Direction: {direction}, BulletSpeed: {bulletSpeed}, Velocity: {direction * bulletSpeed}");
-    
         rb.velocity = direction * bulletSpeed;
-
-        // Проверка velocity после установки
-        Debug.Log($"Velocity после установки: {rb.velocity}");
 
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         if (bulletScript) bulletScript.SetDamage(damage);
