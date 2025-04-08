@@ -2639,6 +2639,79 @@ Transform:
   m_Children: []
   m_Father: {fileID: 446070896}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &735609792
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3283366056926471945, guid: dfd76bed6f3a9fc41aea3b353e179e57,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 57d364e2830658c4fa754c4fdfc313b0, type: 3}
+    - target: {fileID: 7511429579589891199, guid: dfd76bed6f3a9fc41aea3b353e179e57,
+        type: 3}
+      propertyPath: m_Name
+      value: FonSound
+      objectReference: {fileID: 0}
+    - target: {fileID: 8110444922676548338, guid: dfd76bed6f3a9fc41aea3b353e179e57,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 176.52457
+      objectReference: {fileID: 0}
+    - target: {fileID: 8110444922676548338, guid: dfd76bed6f3a9fc41aea3b353e179e57,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -116.51156
+      objectReference: {fileID: 0}
+    - target: {fileID: 8110444922676548338, guid: dfd76bed6f3a9fc41aea3b353e179e57,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 171.61478
+      objectReference: {fileID: 0}
+    - target: {fileID: 8110444922676548338, guid: dfd76bed6f3a9fc41aea3b353e179e57,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8110444922676548338, guid: dfd76bed6f3a9fc41aea3b353e179e57,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8110444922676548338, guid: dfd76bed6f3a9fc41aea3b353e179e57,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8110444922676548338, guid: dfd76bed6f3a9fc41aea3b353e179e57,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8110444922676548338, guid: dfd76bed6f3a9fc41aea3b353e179e57,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8110444922676548338, guid: dfd76bed6f3a9fc41aea3b353e179e57,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8110444922676548338, guid: dfd76bed6f3a9fc41aea3b353e179e57,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dfd76bed6f3a9fc41aea3b353e179e57, type: 3}
 --- !u!64 &757773667
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4611,6 +4684,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddc942ca7f0b0fd4bb635c0526fafaa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blinkImage: {fileID: 0}
+  blinkDuration: 0.5
+  isStart: 0
+  isLevel: 0
   sceneAfterLevel: FourthCatScene
 --- !u!4 &1977179800
 Transform:
@@ -4726,3 +4803,4 @@ SceneRoots:
   - {fileID: 1977179800}
   - {fileID: 1205427304}
   - {fileID: 667721930}
+  - {fileID: 735609792}

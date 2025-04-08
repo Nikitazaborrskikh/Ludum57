@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PlayerStats : IInitializable, IDisposable
 {
-    
+    public AudioClip damageSound;
+    public AudioClip dieSound;
+    public AudioSource audioSource;
+
     public event Action<float> OnHealthChanged;
     private float baseMoveSpeed = 5f;
     private float baseFireRate = 0.5f; 
@@ -116,8 +120,11 @@ public class PlayerStats : IInitializable, IDisposable
         OnHealthChanged?.Invoke(currentHealth);
         if (currentHealth <= 0)
         {
+            audioSource.PlayOneShot(damageSound);
             Die();
+            return;
         }
+        audioSource.PlayOneShot(damageSound);
     }
 
     private void Die()
@@ -142,4 +149,3 @@ public class PlayerStats : IInitializable, IDisposable
         return (baseValue + additiveBonus) * multiplicativeBonus;
     }
 }
-

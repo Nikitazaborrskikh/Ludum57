@@ -1,10 +1,19 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using Zenject;
+using static UnityEngine.Rendering.DebugUI;
+using System.Threading.Tasks;
 
 public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IPausable
 {
+    public AudioClip dashSound;
+    public AudioClip shootSound;
+    public AudioClip damageSound;
+    public AudioClip dieSound;
+    public AudioSource audioSource;
+
     [Header("Movement Settings")]
     [SerializeField] private float dashDuration = 0.2f;
     [SerializeField] private float doubleTapTime = 0.3f;
@@ -19,6 +28,7 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
     public void Construct(PlayerStats playerStats)
     {
         this.playerStats = playerStats;
+
         Debug.Log("PlayerStats injected into PlayerController");
     }
     [SerializeField] private PlayerShooting playerShooting;
@@ -42,7 +52,7 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
     private void Awake()
     {
         playerControls = new PlayerControls();
-        playerControls.Movement.SetCallbacks(this); 
+        playerControls.Movement.SetCallbacks(this);
         if (playerStats == null)
             Debug.LogError("playerStats is null in Awake!", this);
         else
@@ -51,6 +61,10 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        playerStats.damageSound = damageSound;
+        playerStats.dieSound = dieSound;
+        playerStats.audioSource = audioSource;
         controller = GetComponent<CharacterController>();
         if (playerShooting == null)
             playerShooting = GetComponent<PlayerShooting>();
@@ -67,7 +81,7 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
         playerControls.Movement.Disable();
     }
 
-   public void Pause()
+    public void Pause()
     {
         isPaused = true;
         playerControls.Disable();
@@ -107,14 +121,14 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
 
     public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
-        playerShooting.OnPrimaryAttack(context);
+        playerShooting.OnPrimaryAttack(context, shootSound, audioSource);
     }
 
     public void OnSecondaryAttack(InputAction.CallbackContext context)
     {
-        playerShooting.OnSecondaryAttack(context);
+        playerShooting.OnPrimaryAttack(context, shootSound, audioSource);
     }
-    
+
     private void RotateTowardsCursor()
     {
         Vector2 mousePosition = Mouse.current.position.ReadValue();
@@ -139,7 +153,7 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
             {
                 Vector3 direction = (targetPoint - transform.position).normalized;
                 Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-                
+
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeedAngle * Time.deltaTime);
 
                 lastTargetPoint = targetPoint; // Обновляем последнюю точку
@@ -170,7 +184,7 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
 
     private void HandleMovement()
     {
-       
+
         if (playerStats == null)
         {
             Debug.LogError("PlayerStats is null!", this);
@@ -181,7 +195,7 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
         moveDirection += transform.forward * moveInput.y;
         moveDirection += transform.right * moveInput.x; // Исправил опечатку: "direction" -> "right"
         moveDirection = moveDirection.normalized;
-            //  Debug.Log($"moveInput: {moveInput}, moveDirection: {moveDirection}", this);
+        //  Debug.Log($"moveInput: {moveInput}, moveDirection: {moveDirection}", this);
         Vector3 moveVelocity = moveDirection * playerStats.MoveSpeed;
 
         if (!controller.isGrounded)
@@ -189,6 +203,12 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
 
         controller.Move(moveVelocity * Time.deltaTime);
     }
+    private IEnumerator StartSound(AudioClip Sound)
+    {
+        audioSource.PlayOneShot(Sound);
+        yield return null;
+    }
+
     private void HandleDash()
     {
         dashTimeLeft -= Time.deltaTime;
@@ -198,6 +218,7 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
             return;
         }
 
+        StartCoroutine(StartSound(dashSound));
         controller.Move(dashDirection * (playerStats.DashDistance / dashDuration) * Time.deltaTime);
     }
 

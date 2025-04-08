@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.InputSystem;
 using Zenject;
 
@@ -162,20 +163,27 @@ public class PlayerShooting : MonoBehaviour
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         if (bulletScript) bulletScript.EnableSniffing();
     }
+    private IEnumerator StartSound(AudioClip Sound, AudioSource audioSource)
+    {
+        audioSource.PlayOneShot(Sound);
+        yield return null;
+    }
 
-    public void OnPrimaryAttack(InputAction.CallbackContext context)
+    public void OnPrimaryAttack(InputAction.CallbackContext context, AudioClip Sound, AudioSource audioSource)
     {
         if (context.performed && primaryFireTimer <= 0)
         {
+            StartCoroutine(StartSound(Sound, audioSource));
             Shoot(primaryBulletPrefab, true);
             if (playerStats.SpecialEffects.ContainsKey("RCE")) Shoot(secondaryBulletPrefab, false); 
         }
     }
 
-    public void OnSecondaryAttack(InputAction.CallbackContext context)
+    public void OnSecondaryAttack(InputAction.CallbackContext context, AudioClip Sound, AudioSource audioSource)
     {
         if (context.performed && secondaryFireTimer <= 0)
         {
+            StartCoroutine(StartSound(Sound, audioSource));
             Shoot(secondaryBulletPrefab, false);
             if (playerStats.SpecialEffects.ContainsKey("RCE")) Shoot(primaryBulletPrefab, true);
         }

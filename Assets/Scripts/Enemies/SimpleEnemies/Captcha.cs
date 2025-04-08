@@ -1,10 +1,14 @@
 using Projectiles;
 using UnityEngine;
+using System.Collections;
 
 namespace Enemies.SimpleEnemies
 {
     public class Captcha : BaseEnemy
     {
+        public AudioClip shootSound;
+        public AudioClip DieSound;
+        public AudioSource audioSource;
         public override float AttackSpeed => config.captchaStats.attackSpeed;
         public override float DamagePerProjectile => config.captchaStats.damagePerProjectile;
         public override float MovementSpeed => /*PlayerStats.Speed*/ 5f / config.captchaStats.movementSpeedDivider;
@@ -18,10 +22,27 @@ namespace Enemies.SimpleEnemies
             Health = config.captchaStats.health;
             rb = GetComponent<Rigidbody>();
         }
-
+        
+        private IEnumerator StartSound(AudioClip Sound)
+        {
+            audioSource.PlayOneShot(Sound);
+            yield return null; 
+        }
         public override void Attack(Vector3 playerPosition)
         {
+            StartCoroutine(StartSound(shootSound));
             StartCoroutine(AttackSequence(playerPosition));
+        }
+
+        public override void TakeDamage(float damage)
+        {
+            Debug.Log($"Enemy {gameObject.name} took {damage} damage");
+            Health -= damage;
+            if (Health <= 0)
+            {
+                StartCoroutine(StartSound(DieSound));
+                Die();
+            }
         }
 
         private System.Collections.IEnumerator AttackSequence(Vector3 playerPosition)
