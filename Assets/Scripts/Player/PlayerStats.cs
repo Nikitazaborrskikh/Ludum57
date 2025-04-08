@@ -131,7 +131,7 @@ public class PlayerStats : IInitializable, IDisposable
 
     private void Die()
     {
-        managers.GetComponent<LevelsManager>().BlinkAndSwitchScene("Menu");
+        managers.GetComponent<LevelsManager>().BlinkAndSwitchScene(SceneManager.GetActiveScene().buildIndex);
         Dispose();
     }
 

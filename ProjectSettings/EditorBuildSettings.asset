@@ -6,20 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/Scenes/Menu/Menu.unity
     guid: 27ad6cff546abd84fa8eb2b8b9314d61
   - enabled: 1
     path: Assets/Scenes/CatScenes/FirstCatScene.unity
     guid: b245b556095d70f4baa05b89e26fed94
-  - enabled: 1
-    path: Assets/Scenes/CatScenes/SecoundCatScene.unity
-    guid: 1045b17ee47999748b1cba52d790c324
-  - enabled: 1
-    path: Assets/Scenes/CatScenes/ThirdCatScene.unity
-    guid: 983ccf9c9ad0fa54e8d471a7591f3720
-  - enabled: 1
-    path: Assets/Scenes/CatScenes/FourthCatScene.unity
-    guid: 9bc9691d584099548bd24cc739d31089
   - enabled: 1
     path: Assets/Scenes/Levels/Level1.unity
     guid: 59a82c58dcfa49248bdd760d27a3c9f8
@@ -27,15 +18,24 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/Level1Boss.unity
     guid: 3ed5ad14e0fda1642ba3d6754fe0517f
   - enabled: 1
+    path: Assets/Scenes/CatScenes/SecoundCatScene.unity
+    guid: 1045b17ee47999748b1cba52d790c324
+  - enabled: 1
     path: Assets/Scenes/Levels/Level2.unity
     guid: fefa80b9acaf8c148b2f6e5a278e0c78
   - enabled: 1
     path: Assets/Scenes/Levels/Level2Boss.unity
     guid: 3da7fc7b36171584a89c0de8ca1a989f
   - enabled: 1
+    path: Assets/Scenes/CatScenes/ThirdCatScene.unity
+    guid: 983ccf9c9ad0fa54e8d471a7591f3720
+  - enabled: 1
     path: Assets/Scenes/Levels/Level3.unity
     guid: aec5c91e429310741aa1ea4881ee25c5
   - enabled: 1
     path: Assets/Scenes/Levels/Level3Boss.unity
     guid: 745493b044a1a8042a111b491e169ebd
+  - enabled: 1
+    path: Assets/Scenes/CatScenes/FourthCatScene.unity
+    guid: 9bc9691d584099548bd24cc739d31089
   m_configObjects: {}

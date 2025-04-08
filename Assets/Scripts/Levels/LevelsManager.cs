@@ -12,7 +12,7 @@ public class LevelsManager : MonoBehaviour
     public float blinkDuration = 0.5f; // Длительность моргания
 
     public bool isStart;
-    public bool isLevel;
+    public bool isBoss;
 
     public string sceneAfterLevel;
     // Start is called before the first frame update
@@ -26,7 +26,7 @@ public class LevelsManager : MonoBehaviour
 
     private void Update()
     {
-        if (isLevel && !availabilityEnemys())
+        if (isBoss && !availabilityEnemys())
         {
             StartCoroutine(BlinkAndSwitchScene());
         }
@@ -60,21 +60,49 @@ public class LevelsManager : MonoBehaviour
 
     }
 
-    public IEnumerator Start_cortune(int t, int t1)
+    private string GetSceneNameByIndex(int index)
     {
-        yield return Fade(0, 1, blinkDuration);
+        // Проверяем, что индекс находится в пределах допустимого диапазона
+        if (index >= 0 && index < SceneManager.sceneCountInBuildSettings)
+        {
+            // Получаем имя сцены по индексу
+            return SceneUtility.GetScenePathByBuildIndex(index).Split('/')[3].Replace(".unity", "");
+        }
+        return null;
+    }
+
+    public void BlinkAndSwitchScene(int sceneNum)
+    {
+        if (availabilityEnemys()) return;
+        // Устанавливаем начальное значение альфа
+        blinkImage.alpha = 0;
+
+        sceneAfterLevel = GetSceneNameByIndex(sceneNum);
+
+        StartCoroutine(fastBlinkAndSwitchScene());
     }
 
     public void BlinkAndSwitchScene(string sceneName)
     {
+        if (availabilityEnemys()) return;
         // Устанавливаем начальное значение альфа
         blinkImage.alpha = 0;
 
+        sceneAfterLevel = sceneName;
+
         // Плавное появление
-        StartCoroutine(Start_cortune(0, 1));
+        StartCoroutine(BlinkAndSwitchScene());
+    }
+
+    public IEnumerator fastBlinkAndSwitchScene()
+    {
+        // Устанавливаем начальное значение альфа
+        blinkImage.alpha = 0;
+        // Плавное появление
+        yield return Fade(0, 1, blinkDuration);
 
         // Переключение сцены
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(sceneAfterLevel);
     }
 
     public IEnumerator BlinkAndSwitchScene()

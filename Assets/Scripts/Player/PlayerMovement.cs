@@ -5,6 +5,7 @@ using UnityEngine.Serialization;
 using Zenject;
 using static UnityEngine.Rendering.DebugUI;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IPausable
 {
