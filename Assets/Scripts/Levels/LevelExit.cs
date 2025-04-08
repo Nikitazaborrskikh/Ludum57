@@ -12,8 +12,7 @@ public class LevelExit : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Exit");
-            managers.GetComponent<LevelsManager>().BlinkAndSwitchScene(SceneManager.GetActiveScene().buildIndex + 1);
+            managers.GetComponent<LevelsManager>().BlinkAndSwitchScene(SceneManager.GetActiveScene().buildIndex + 1, true);
         }
     }
 }

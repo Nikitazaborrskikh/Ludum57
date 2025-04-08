@@ -26,7 +26,8 @@ public class LevelsManager : MonoBehaviour
 
     private void Update()
     {
-        if (isBoss && !availabilityEnemys())
+        Debug.Log(PlayerPrefs.GetInt("StopLevelsManager", 0));
+        if (isBoss && PlayerPrefs.GetInt("StopLevelsManager", 0) == 0 && !availabilityEnemys())
         {
             StartCoroutine(BlinkAndSwitchScene());
         }
@@ -71,15 +72,28 @@ public class LevelsManager : MonoBehaviour
         return null;
     }
 
+    public void BlinkAndSwitchScene(int sceneNum, bool isAvailabilityEnemys)
+    {
+        if (isAvailabilityEnemys && availabilityEnemys()) return;
+        // Устанавливаем начальное значение альфа
+        BlinkAndSwitchScene(sceneNum);
+    }
+
     public void BlinkAndSwitchScene(int sceneNum)
     {
-        if (availabilityEnemys()) return;
         // Устанавливаем начальное значение альфа
         blinkImage.alpha = 0;
 
         sceneAfterLevel = GetSceneNameByIndex(sceneNum);
 
         StartCoroutine(fastBlinkAndSwitchScene());
+    }
+
+    public void BlinkAndSwitchScene(string sceneName, bool isAvailabilityEnemys)
+    {
+        if (isAvailabilityEnemys && availabilityEnemys()) return;
+        // Устанавливаем начальное значение альфа
+        BlinkAndSwitchScene(sceneName);
     }
 
     public void BlinkAndSwitchScene(string sceneName)
