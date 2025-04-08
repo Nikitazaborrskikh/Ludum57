@@ -9,6 +9,7 @@ namespace Enemies
     public abstract class BaseEnemy : MonoBehaviour, IEnemy, IPausable
     {
         [SerializeField] protected EnemyConfig config;
+        [SerializeField] private float triggerRadius;
         [Inject] protected UpgradeManager upgradeManager;
         [Inject] protected ProjectilePool projectilePool;
 
@@ -22,15 +23,18 @@ namespace Enemies
         private GameObject player;
         private float attackTimer;
         private bool isPaused;
+        private bool isPlayerInTriggerZone; // Флаг, показывающий, находится ли игрок в зоне
 
         private void Start()
         {
             player = GameObject.FindGameObjectWithTag("Player");
+            SetupTriggerZone(); // Настраиваем триггер-зону
         }
 
         protected virtual void Update()
         {
-            if (isPaused) return;
+            if (isPaused || !isPlayerInTriggerZone) return; // Ничего не делаем, если пауза или игрок вне зоны
+
             attackTimer += Time.deltaTime;
             Vector3 playerPos = FindPlayerPosition();
             Move(playerPos);
@@ -39,6 +43,26 @@ namespace Enemies
             {
                 Attack(playerPos);
                 attackTimer = 0f;
+            }
+        }
+        
+        private void SetupTriggerZone()
+        {
+            // Добавляем или настраиваем триггер-коллайдер
+            SphereCollider triggerCollider = gameObject.GetComponent<SphereCollider>();
+            if (triggerCollider == null)
+            {
+                triggerCollider = gameObject.AddComponent<SphereCollider>();
+            }
+            triggerCollider.isTrigger = true; // Устанавливаем как триггер
+            triggerCollider.radius = triggerRadius; // Устанавливаем радиус
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                isPlayerInTriggerZone = true; // Игрок вошёл в зону
             }
         }
 
@@ -64,12 +88,11 @@ namespace Enemies
 
         public virtual void Attack(Vector3 playerPosition)
         {
-            // Базовая реализация, может быть переопределена
             Vector3 direction = (playerPosition - transform.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(direction);
             Projectile projectile = projectilePool.GetProjectile(
                 GetProjectilePrefab(),
-                GetProjectileType(), // Добавлен тип
+                GetProjectileType(),
                 transform.position,
                 rotation
             );
@@ -80,12 +103,12 @@ namespace Enemies
 
         protected virtual GameObject GetProjectilePrefab()
         {
-            return config.captchaStats.projectilePrefab; // Базовая реализация, переопределяется в наследниках
+            return config.captchaStats.projectilePrefab;
         }
 
         protected virtual ProjectileType GetProjectileType()
         {
-            return config.captchaStats.projectileType; // Базовая реализация
+            return config.captchaStats.projectileType;
         }
 
         private Vector3 FindPlayerPosition()

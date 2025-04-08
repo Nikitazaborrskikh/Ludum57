@@ -2575,7 +2575,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!136 &4034272579891709116
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2615,6 +2615,8 @@ MonoBehaviour:
   shootSound: {fileID: 8300000, guid: c12cb2320152e564e85ad8011aea61d8, type: 3}
   damageSound: {fileID: 8300000, guid: 97affc8ab37a4964684f7464ef511744, type: 3}
   dieSound: {fileID: 8300000, guid: 3eeaf65c80a326440a119ec00c72651f, type: 3}
+  audioSource: {fileID: 0}
+  managers: {fileID: 0}
   dashDuration: 0.2
   doubleTapTime: 0.3
   dashCooldown: 1
