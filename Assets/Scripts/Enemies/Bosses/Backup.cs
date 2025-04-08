@@ -13,7 +13,8 @@ namespace Enemies.Bosses
 
         private ProjectileType projectileType => config.backupStats.projectileType;
         private Rigidbody rb;
-
+        private Animator animator;
+        
         private float spawnTimer;
         public GameObject firewallPrefab;
 
@@ -21,10 +22,7 @@ namespace Enemies.Bosses
         {
             Health = config.backupStats.health;
             rb = GetComponent<Rigidbody>();
-        }
-
-        private void Start()
-        {
+            animator = GetComponent<Animator>();
             StartCoroutine(SpawnFirewallRoutine());
         }
 
@@ -53,17 +51,24 @@ namespace Enemies.Bosses
         public override void Move(Vector3 playerPosition)
         {
             Vector3 direction = (playerPosition - transform.position).normalized;
-            transform.rotation = Quaternion.LookRotation(direction);
-
+            //transform.rotation = Quaternion.LookRotation(direction); //Добавить когда цх повернут на 90 по Y
+            Quaternion lookRotation = Quaternion.LookRotation(direction); //Убрать когда цх повернут на 90 по Y
+            transform.rotation = lookRotation * Quaternion.Euler(0, 90f, 0); //Убрать когда цх повернут на 90 по Y
+            
             float distance = Vector3.Distance(transform.position, playerPosition);
             if (distance > DistanceToPlayer)
             {
-                rb.constraints = RigidbodyConstraints.None;
+                rb.constraints = RigidbodyConstraints.FreezeRotation;
                 transform.position = Vector3.MoveTowards(transform.position,
                     playerPosition,
                     MovementSpeed * Time.deltaTime);
+                animator.SetBool("isMoving", true);
             }
-            else rb.constraints = RigidbodyConstraints.FreezePosition;
+            else
+            {
+                rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+                animator.SetBool("isMoving", false);
+            }
         }
 
         private IEnumerator SpawnFirewallRoutine()

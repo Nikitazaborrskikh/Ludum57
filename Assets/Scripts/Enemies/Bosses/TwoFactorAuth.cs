@@ -22,6 +22,7 @@ namespace Enemies.Bosses
             config.twoFactorAuth.phase1.projectileType :
             config.twoFactorAuth.phase2.projectileType;
         private Rigidbody rb;
+        private Animator animator;
 
         private int currentPhase = 1;
 
@@ -29,6 +30,7 @@ namespace Enemies.Bosses
         {
             Health = config.twoFactorAuth.phase1.health;
             rb = GetComponent<Rigidbody>();
+            animator = GetComponent<Animator>();
         }
 
         public override void Attack(Vector3 playerPosition)
@@ -55,12 +57,17 @@ namespace Enemies.Bosses
             float distance = Vector3.Distance(transform.position, playerPosition);
             if (distance > DistanceToPlayer)
             {
-                rb.constraints = RigidbodyConstraints.None;
+                rb.constraints = RigidbodyConstraints.FreezeRotation;
                 transform.position = Vector3.MoveTowards(transform.position,
                     playerPosition,
                     MovementSpeed * Time.deltaTime);
+                animator.SetBool("isMoving", true);
             }
-            else rb.constraints = RigidbodyConstraints.FreezePosition;
+            else
+            {
+                rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+                animator.SetBool("isMoving", false);
+            }
         }
 
         public override void TakeDamage(float damage)
