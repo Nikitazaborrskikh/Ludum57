@@ -6,6 +6,9 @@ namespace Enemies.Bosses
 {
     public class Backup : BaseEnemy
     {
+        public AudioClip shootSound;
+        public AudioClip DieSound;
+        public GameObject audioSource;
         public override float AttackSpeed => config.backupStats.attackSpeed;
         public override float DamagePerProjectile => config.backupStats.damagePerProjectile;
         public override float MovementSpeed => /*PlayerStats.Speed*/ 5f / config.backupStats.movementSpeedDivider;
@@ -26,8 +29,15 @@ namespace Enemies.Bosses
             StartCoroutine(SpawnFirewallRoutine());
         }
 
+        private IEnumerator StartSound(AudioClip Sound)
+        {
+            audioSource.GetComponent<AudioSource>().PlayOneShot(Sound);
+            yield return null;
+        }
+
         public override void Attack(Vector3 playerPosition)
         {
+            StartCoroutine(StartSound(shootSound));
             Vector3 direction = (playerPosition - transform.position).normalized;
             float angleStep = 15f;
             float startAngle = -angleStep * 2.5f;
@@ -45,6 +55,17 @@ namespace Enemies.Bosses
                 );
                 projectile.Initialize(GetProjectilePrefab(), spread, rotation, DamagePerProjectile, projectileType, this);
                 projectile.OnHit += HandleProjectileHit;
+            }
+        }
+
+        public override void TakeDamage(float damage)
+        {
+            Debug.Log($"Enemy {gameObject.name} took {damage} damage");
+            Health -= damage;
+            if (Health <= 0)
+            {
+                StartCoroutine(StartSound(DieSound));
+                Die();
             }
         }
 

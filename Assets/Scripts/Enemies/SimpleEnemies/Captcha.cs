@@ -8,7 +8,7 @@ namespace Enemies.SimpleEnemies
     {
         public AudioClip shootSound;
         public AudioClip DieSound;
-        public AudioSource audioSource;
+        public GameObject audioSource;
         public override float AttackSpeed => config.captchaStats.attackSpeed;
         public override float DamagePerProjectile => config.captchaStats.damagePerProjectile;
         public override float MovementSpeed => /*PlayerStats.Speed*/ 5f / config.captchaStats.movementSpeedDivider;
@@ -22,11 +22,11 @@ namespace Enemies.SimpleEnemies
             Health = config.captchaStats.health;
             rb = GetComponent<Rigidbody>();
         }
-        
+
         private IEnumerator StartSound(AudioClip Sound)
         {
-            audioSource.PlayOneShot(Sound);
-            yield return null; 
+            audioSource.GetComponent<AudioSource>().PlayOneShot(Sound);
+            yield return null;
         }
         public override void Attack(Vector3 playerPosition)
         {

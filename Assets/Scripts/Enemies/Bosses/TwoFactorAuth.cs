@@ -1,10 +1,13 @@
 using Projectiles;
 using UnityEngine;
-
+using System.Collections;
 namespace Enemies.Bosses
 {
     public class TwoFactorAuth : BaseEnemy
     {
+        public AudioClip shootSound;
+        public AudioClip DieSound;
+        public GameObject audioSource;
         public override float AttackSpeed => currentPhase == 1 ?
             config.twoFactorAuth.phase1.attackSpeed :
             config.twoFactorAuth.phase2.attackSpeed;
@@ -33,8 +36,15 @@ namespace Enemies.Bosses
             animator = GetComponent<Animator>();
         }
 
+        private IEnumerator StartSound(AudioClip Sound)
+        {
+            audioSource.GetComponent<AudioSource>().PlayOneShot(Sound);
+            yield return null;
+        }
+
         public override void Attack(Vector3 playerPosition)
         {
+            StartCoroutine(StartSound(shootSound));
             for (int i = 0; i < 6; i++)
             {
                 Vector3 direction = Quaternion.Euler(0, 60 * i, 0) * Vector3.forward;
@@ -80,6 +90,7 @@ namespace Enemies.Bosses
             }
             else if (Health <= 0 && currentPhase == 2)
             {
+                StartCoroutine(StartSound(DieSound));
                 Die();
                 Destroy(gameObject);
             }

@@ -12,7 +12,9 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
     public AudioClip shootSound;
     public AudioClip damageSound;
     public AudioClip dieSound;
-    public AudioSource audioSource;
+    public GameObject audioSource;
+
+    public GameObject managers;
 
     [Header("Movement Settings")]
     [SerializeField] private float dashDuration = 0.2f;
@@ -61,10 +63,10 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         playerStats.damageSound = damageSound;
         playerStats.dieSound = dieSound;
-        playerStats.audioSource = audioSource;
+        playerStats.audioSource = audioSource.GetComponent<AudioSource>();
+        playerStats.managers = managers;
         controller = GetComponent<CharacterController>();
         if (playerShooting == null)
             playerShooting = GetComponent<PlayerShooting>();
@@ -121,12 +123,12 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
 
     public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
-        playerShooting.OnPrimaryAttack(context, shootSound, audioSource);
+        playerShooting.OnPrimaryAttack(context, shootSound, audioSource.GetComponent<AudioSource>());
     }
 
     public void OnSecondaryAttack(InputAction.CallbackContext context)
     {
-        playerShooting.OnPrimaryAttack(context, shootSound, audioSource);
+        playerShooting.OnPrimaryAttack(context, shootSound, audioSource.GetComponent<AudioSource>());
     }
 
     private void RotateTowardsCursor()
@@ -205,7 +207,7 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
     }
     private IEnumerator StartSound(AudioClip Sound)
     {
-        audioSource.PlayOneShot(Sound);
+        audioSource.GetComponent<AudioSource>().PlayOneShot(Sound);
         yield return null;
     }
 

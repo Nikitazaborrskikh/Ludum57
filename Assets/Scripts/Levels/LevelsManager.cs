@@ -60,9 +60,25 @@ public class LevelsManager : MonoBehaviour
 
     }
 
+    public IEnumerator Start_cortune(int t, int t1)
+    {
+        yield return Fade(0, 1, blinkDuration);
+    }
+
+    public void BlinkAndSwitchScene(string sceneName)
+    {
+        // Устанавливаем начальное значение альфа
+        blinkImage.alpha = 0;
+
+        // Плавное появление
+        StartCoroutine(Start_cortune(0, 1));
+
+        // Переключение сцены
+        SceneManager.LoadScene(sceneName);
+    }
+
     public IEnumerator BlinkAndSwitchScene()
     {
-        Debug.Log(2);
         // Устанавливаем начальное значение альфа
         blinkImage.alpha = 0;
 

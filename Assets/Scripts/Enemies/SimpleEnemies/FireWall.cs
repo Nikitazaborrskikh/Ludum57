@@ -1,11 +1,15 @@
 using Projectiles;
 using UnityEngine;
+using System.Collections;
 using Zenject;
 
 namespace Enemies.SimpleEnemies
 {
     public class Firewall : BaseEnemy
     {
+        public AudioClip shootSound;
+        public AudioClip DieSound;
+        public GameObject audioSource;
         public override float AttackSpeed => config.firewallStats.attackSpeed;
         public override float DamagePerProjectile => config.firewallStats.damagePerProjectile;
         public override float MovementSpeed => /*PlayerStats.Speed*/ 5f / config.firewallStats.movementSpeedDivider;
@@ -23,9 +27,15 @@ namespace Enemies.SimpleEnemies
             rb = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
         }
+        private IEnumerator StartSound(AudioClip Sound)
+        {
+            audioSource.GetComponent<AudioSource>().PlayOneShot(Sound);
+            yield return null;
+        }
 
         public override void Attack(Vector3 playerPosition)
         {
+            StartCoroutine(StartSound(shootSound));
             Vector3 direction = (playerPosition - transform.position).normalized;
             for (int i = -1; i <= 1; i++)
             {
@@ -38,6 +48,17 @@ namespace Enemies.SimpleEnemies
                     rotation
                 );
                 projectile.Initialize(GetProjectilePrefab(), spread, rotation, DamagePerProjectile, projectileType, this);
+            }
+        }
+
+        public override void TakeDamage(float damage)
+        {
+            Debug.Log($"Enemy {gameObject.name} took {damage} damage");
+            Health -= damage;
+            if (Health <= 0)
+            {
+                StartCoroutine(StartSound(DieSound));
+                Die();
             }
         }
 

@@ -10,6 +10,7 @@ public class PlayerStats : IInitializable, IDisposable
     public AudioClip damageSound;
     public AudioClip dieSound;
     public AudioSource audioSource;
+    public GameObject managers;
 
     public event Action<float> OnHealthChanged;
     private float baseMoveSpeed = 5f;
@@ -120,7 +121,8 @@ public class PlayerStats : IInitializable, IDisposable
         OnHealthChanged?.Invoke(currentHealth);
         if (currentHealth <= 0)
         {
-            audioSource.PlayOneShot(damageSound);
+            
+            audioSource.PlayOneShot(dieSound);
             Die();
             return;
         }
@@ -129,7 +131,7 @@ public class PlayerStats : IInitializable, IDisposable
 
     private void Die()
     {
-        SceneManager.LoadScene("Menu");
+        managers.GetComponent<LevelsManager>().BlinkAndSwitchScene("Menu");
         Dispose();
     }
 

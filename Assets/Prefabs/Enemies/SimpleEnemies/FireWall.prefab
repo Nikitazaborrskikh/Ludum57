@@ -388,6 +388,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 29ca65abe831a744fb0b0308a2ee90ce, type: 2}
+  shootSound: {fileID: 8300000, guid: f602d3c563ac64849a5bb0d8fe521e85, type: 3}
+  DieSound: {fileID: 8300000, guid: e8fd17fd3325fb540babf741cbd087c8, type: 3}
+  audioSource: {fileID: 0}
 --- !u!136 &3374164517291460688
 CapsuleCollider:
   m_ObjectHideFlags: 0
