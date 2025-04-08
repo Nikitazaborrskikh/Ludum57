@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Enemies;
 using UnityEngine;
 using Zenject;
 using Projectiles;
@@ -86,7 +85,7 @@ public class ProjectilePool : MonoBehaviour
 
         Projectile projectile = pool.Dequeue();
         projectile.transform.position = position;
-        projectile.transform.rotation = rotation;
+        projectile.transform.rotation = rotation * Quaternion.Euler(0, 90f, 0);
         return projectile;
     }
 

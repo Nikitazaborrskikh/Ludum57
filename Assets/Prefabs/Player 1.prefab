@@ -2636,9 +2636,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d37107921e6ad43ab590aac0506167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primaryBulletPrefab: {fileID: 3917014632911779190, guid: dcf8db2841e4d464483fca0b10ee2b29,
+  primaryBulletPrefab: {fileID: 8087790691340264171, guid: 49166b3a839a30e41a909b6802258df6,
     type: 3}
-  secondaryBulletPrefab: {fileID: 3917014632911779190, guid: 2695cd5015ee9544c827094761cd3c66,
+  secondaryBulletPrefab: {fileID: 6122065601847021917, guid: 8ce9af6076829944ca76796a7f1c6bcf,
     type: 3}
   bulletSpeed: 10
   bulletSpawnPoint: {fileID: 6322175748095478364}

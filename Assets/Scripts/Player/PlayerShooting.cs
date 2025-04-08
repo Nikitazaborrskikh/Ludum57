@@ -101,7 +101,8 @@ public class PlayerShooting : MonoBehaviour
     private void ShootSingle(Vector3 direction, GameObject bulletPrefab, float damage, Vector3? spawnPosition = null)
     {
         Vector3 position = spawnPosition ?? bulletSpawnPoint.position;
-        GameObject bullet = Instantiate(bulletPrefab, position, Quaternion.LookRotation(direction));
+        Quaternion rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 90f, 0);
+        GameObject bullet = Instantiate(bulletPrefab, position, rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
     
         if (rb == null)
@@ -126,7 +127,8 @@ public class PlayerShooting : MonoBehaviour
     private void ShootRicochet(Vector3 direction, GameObject bulletPrefab, float damage)
     {
         Vector3 position = bulletSpawnPoint.position;
-        GameObject bullet = Instantiate(bulletPrefab, position, Quaternion.LookRotation(direction));
+        Quaternion rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 90f, 0);
+        GameObject bullet = Instantiate(bulletPrefab, position, rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb == null)
         {
@@ -152,7 +154,8 @@ public class PlayerShooting : MonoBehaviour
     private void ShootSniffing(Vector3 direction, GameObject bulletPrefab, float damage)
     {
         Vector3 position = bulletSpawnPoint.position;
-        GameObject bullet = Instantiate(bulletPrefab, position, Quaternion.LookRotation(direction));
+        Quaternion rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 90f, 0);
+        GameObject bullet = Instantiate(bulletPrefab, position, rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb == null)
         {

@@ -44,7 +44,7 @@ namespace Projectiles
             this.prefab = prefab;
             Type = type;
             direction = dir;
-            transform.rotation = rotation;
+            transform.rotation = rotation * Quaternion.Euler(0, 90f, 0);
             damage = dmg;
             owner = shooter;
             gameObject.SetActive(true);

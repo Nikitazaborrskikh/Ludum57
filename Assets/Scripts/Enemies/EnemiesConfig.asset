@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   captchaStats:
     projectileType: 0
-    projectilePrefab: {fileID: 4764697264493589116, guid: 712fbec4721f99849b3ce953c2694863,
+    projectilePrefab: {fileID: 6656436231531452358, guid: 07785baa07238aa4a9aeb436dc2c4291,
       type: 3}
     attackSpeed: 2
     damagePerProjectile: 1
@@ -23,7 +23,7 @@ MonoBehaviour:
     health: 3
   userPageStats:
     projectileType: 1
-    projectilePrefab: {fileID: 307475004863292023, guid: 121f9f3fef1984e4c96c281d876ec637,
+    projectilePrefab: {fileID: 7721521905559426275, guid: ed2915981bd700e4bbc7944cff6f619d,
       type: 3}
     attackSpeed: 1.5
     damagePerProjectile: 2
@@ -32,7 +32,7 @@ MonoBehaviour:
     health: 4
   firewallStats:
     projectileType: 0
-    projectilePrefab: {fileID: 4764697264493589116, guid: 712fbec4721f99849b3ce953c2694863,
+    projectilePrefab: {fileID: 6656436231531452358, guid: 07785baa07238aa4a9aeb436dc2c4291,
       type: 3}
     attackSpeed: 1.5
     damagePerProjectile: 1
@@ -41,7 +41,7 @@ MonoBehaviour:
     health: 5
   encryptionStats:
     projectileType: 0
-    projectilePrefab: {fileID: 4764697264493589116, guid: 712fbec4721f99849b3ce953c2694863,
+    projectilePrefab: {fileID: 6656436231531452358, guid: 07785baa07238aa4a9aeb436dc2c4291,
       type: 3}
     attackSpeed: 4
     damagePerProjectile: 1
@@ -51,7 +51,7 @@ MonoBehaviour:
   twoFactorAuth:
     phase1:
       projectileType: 1
-      projectilePrefab: {fileID: 307475004863292023, guid: 121f9f3fef1984e4c96c281d876ec637,
+      projectilePrefab: {fileID: 7721521905559426275, guid: ed2915981bd700e4bbc7944cff6f619d,
         type: 3}
       attackSpeed: 1.5
       damagePerProjectile: 2
@@ -60,7 +60,7 @@ MonoBehaviour:
       health: 100
     phase2:
       projectileType: 1
-      projectilePrefab: {fileID: 307475004863292023, guid: 121f9f3fef1984e4c96c281d876ec637,
+      projectilePrefab: {fileID: 7721521905559426275, guid: ed2915981bd700e4bbc7944cff6f619d,
         type: 3}
       attackSpeed: 1
       damagePerProjectile: 2
@@ -69,7 +69,7 @@ MonoBehaviour:
       health: 100
   backupStats:
     projectileType: 0
-    projectilePrefab: {fileID: 4764697264493589116, guid: 712fbec4721f99849b3ce953c2694863,
+    projectilePrefab: {fileID: 6656436231531452358, guid: 07785baa07238aa4a9aeb436dc2c4291,
       type: 3}
     attackSpeed: 1.5
     damagePerProjectile: 1
