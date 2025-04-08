@@ -8,6 +8,8 @@ public class BtnStartGame : MonoBehaviour
 {
     public AudioClip focusSound;
     private AudioSource audioSource;
+
+    public GameObject managers;
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -18,7 +20,7 @@ public class BtnStartGame : MonoBehaviour
     private void StartGame()
     {
         audioSource.PlayOneShot(focusSound);
-        SceneManager.LoadScene("FirstCatScene");
+        StartCoroutine(managers.GetComponent<LevelsManager>().BlinkAndSwitchScene());
     }
 
 }
