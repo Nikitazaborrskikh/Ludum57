@@ -50,7 +50,6 @@ namespace Enemies
 
         private Vector3 FindPlayerPosition()
         {
-            Debug.Log(player.transform.position);
             return player.transform.position;
         }
 
