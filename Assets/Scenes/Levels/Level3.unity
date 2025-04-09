@@ -3639,6 +3639,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Settings
       objectReference: {fileID: 0}
+    - target: {fileID: 2246982667571160834, guid: 10762d6715add5c48a2cc1f6e22c01fa,
+        type: 3}
+      propertyPath: SettingsMenuController
+      value: 
+      objectReference: {fileID: 1100318155}
     - target: {fileID: 3315869792989976402, guid: 10762d6715add5c48a2cc1f6e22c01fa,
         type: 3}
       propertyPath: m_Pivot.x
@@ -3766,7 +3771,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 10762d6715add5c48a2cc1f6e22c01fa, type: 3}
 --- !u!1 &815964969 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 103387812896415252, guid: 10762d6715add5c48a2cc1f6e22c01fa,
+  m_CorrespondingSourceObject: {fileID: 2712537195298263362, guid: 10762d6715add5c48a2cc1f6e22c01fa,
     type: 3}
   m_PrefabInstance: {fileID: 815964968}
   m_PrefabAsset: {fileID: 0}

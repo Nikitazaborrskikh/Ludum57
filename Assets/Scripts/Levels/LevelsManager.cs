@@ -26,7 +26,6 @@ public class LevelsManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(PlayerPrefs.GetInt("StopLevelsManager", 0));
         if (isBoss && PlayerPrefs.GetInt("StopLevelsManager", 0) == 0 && !availabilityEnemys())
         {
             StartCoroutine(BlinkAndSwitchScene());
