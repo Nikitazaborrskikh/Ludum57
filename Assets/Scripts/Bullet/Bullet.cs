@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour
                 if (nearestEnemy)
                 {
                     Vector3 direction = (nearestEnemy.transform.position - transform.position).normalized;
-                    GetComponent<Rigidbody>().velocity = direction * 10f; 
+                    GetComponent<Rigidbody>().velocity = direction; 
                     nearestEnemy.GetComponent<BaseEnemy>().TakeDamage(damage);
                     canRicochet = false;
                     Destroy(gameObject);

@@ -14,6 +14,7 @@ public class BtnExit : MonoBehaviour
 
     public void CloseGame()
     {
+        PlayerPrefs.DeleteAll();
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #else

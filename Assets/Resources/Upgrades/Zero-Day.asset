@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb9b99db1e0d96d46a698028f88d8fb7, type: 3}
-  m_Name: DoS
+  m_Name: Zero-Day
   m_EditorClassIdentifier: 
-  upgradeName: DoS
-  upgradeTypeKey: LMB
-  description: Significantly increases the attack speed
-  upgradeType: 1
-  value: -0.25
-  effectType: 0
-  isPrimaryAttack: 1
-  specialEffect: 
+  upgradeName: Zero-Day
+  upgradeTypeKey: OTHER
+  description: An attack after dodging causes additional damage.
+  upgradeType: 0
+  value: 0
+  effectType: 1
+  isPrimaryAttack: 0
+  specialEffect: Zero-Day

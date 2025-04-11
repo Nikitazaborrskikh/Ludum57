@@ -347,8 +347,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4694287161149744915}
   - {fileID: 7534378183991790475}
@@ -389,6 +389,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 29ca65abe831a744fb0b0308a2ee90ce, type: 2}
   triggerRadius: 35
+  upgradeDropPrefab: {fileID: 2160835717958046526, guid: c5f96fd810db6ad4cb0f0a204e747817,
+    type: 3}
   shootSound: {fileID: 8300000, guid: f602d3c563ac64849a5bb0d8fe521e85, type: 3}
   DieSound: {fileID: 8300000, guid: e8fd17fd3325fb540babf741cbd087c8, type: 3}
   audioSource: {fileID: 0}

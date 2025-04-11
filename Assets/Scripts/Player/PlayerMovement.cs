@@ -129,7 +129,7 @@ public class PlayerMovement : MonoBehaviour, PlayerControls.IMovementActions, IP
 
     public void OnSecondaryAttack(InputAction.CallbackContext context)
     {
-        playerShooting.OnPrimaryAttack(context, shootSound, audioSource.GetComponent<AudioSource>());
+        playerShooting.OnSecondaryAttack(context, shootSound, audioSource.GetComponent<AudioSource>());
     }
 
     private void RotateTowardsCursor()

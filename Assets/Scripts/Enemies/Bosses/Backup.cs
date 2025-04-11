@@ -1,6 +1,8 @@
 using System.Collections;
 using Projectiles;
 using UnityEngine;
+using UnityEngine.UI;
+using Zenject;
 
 namespace Enemies.Bosses
 {
@@ -9,6 +11,7 @@ namespace Enemies.Bosses
         public AudioClip shootSound;
         public AudioClip DieSound;
         public GameObject audioSource;
+        [SerializeField] private Slider slider;
         public override float AttackSpeed => config.backupStats.attackSpeed;
         public override float DamagePerProjectile => config.backupStats.damagePerProjectile;
         public override float MovementSpeed => /*PlayerStats.Speed*/ 5f / config.backupStats.movementSpeedDivider;
@@ -20,9 +23,10 @@ namespace Enemies.Bosses
         
         private float spawnTimer;
         public GameObject firewallPrefab;
-
+        [Inject] private DiContainer container;
         private void Awake()
         {
+            slider.maxValue = config.twoFactorAuth.phase1.health;
             Health = config.backupStats.health;
             rb = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
@@ -62,6 +66,7 @@ namespace Enemies.Bosses
         {
             Debug.Log($"Enemy {gameObject.name} took {damage} damage");
             Health -= damage;
+            slider.value = Health;
             if (Health <= 0)
             {
                 StartCoroutine(StartSound(DieSound));
@@ -110,7 +115,8 @@ namespace Enemies.Bosses
             }
             for (int i = 0; i < 2; i++)
             {
-                Instantiate(firewallPrefab, transform.position + Random.insideUnitSphere * 2f, Quaternion.identity);
+               
+                GameObject dropObj = container.InstantiatePrefab(firewallPrefab, transform.position + Random.insideUnitSphere * 2f, Quaternion.identity, null);
             }
         }
 

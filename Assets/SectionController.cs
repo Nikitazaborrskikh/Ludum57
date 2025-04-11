@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class SectionController : MonoBehaviour
 {
+    [Inject] private PlayerStats playerStats;
     private Material material;
     private bool isActive = false;
     private bool isWarning = false;
@@ -61,14 +63,15 @@ public class SectionController : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (isActive && !hasDamaged && other.gameObject.layer == LayerMask.NameToLayer("Player") /*Player.layer*/) // Проверяем, не нанесли ли уже урон
+        Debug.Log(other.gameObject.name);
+        if (isActive && !hasDamaged && other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+            Debug.Log("Player is collided");
+            if (playerStats != null)
             {
                 Debug.Log("Player is damaged");
-                //playerHealth.TakeDamage(1);
-                hasDamaged = true; // Устанавливаем флаг, чтобы урон больше не наносился
+                playerStats.TakeDamage(1f);
+                hasDamaged = true; 
             }
         }
     }
