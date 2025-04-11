@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SettingsMenuController : MonoBehaviour
@@ -10,10 +11,19 @@ public class SettingsMenuController : MonoBehaviour
 
     private void Start()
     {
+        PlayerPrefs.SetInt("isSettings", 0);
         settingsMenu.SetActive(false);
+    }
+
+    public IEnumerator SetIsSettings()
+    {
+        yield return new WaitForSeconds(0f);
+
+        PlayerPrefs.SetInt("isSettings", (!settingsMenu.activeSelf) ? 1 : 0);
     }
     public void ToggleSettingsMenu()
     {
+        PlayerPrefs.SetInt("isSettings", (!settingsMenu.activeSelf) ? 1 : 0);
         if (stopWhenSettings != null) {stopWhenSettings.SetActive(settingsMenu.activeSelf);}
         if (stopFonSound != null) 
         { 

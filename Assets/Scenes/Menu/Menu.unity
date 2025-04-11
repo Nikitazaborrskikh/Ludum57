@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 522023f168ea26e4abb1c6b671ab6b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settingsMenu: {fileID: 764765215}
+  settingsMenu: {fileID: 999586862}
   stopWhenSettings: {fileID: 0}
   stopFonSound: {fileID: 0}
 --- !u!4 &123528322
@@ -368,7 +368,7 @@ MonoBehaviour:
   blinkImage: {fileID: 1024041243}
   blinkDuration: 0.5
   isStart: 1
-  isLevel: 0
+  isBoss: 0
   sceneAfterLevel: FirstCatScene
 --- !u!1 &468973087
 GameObject:
@@ -991,12 +991,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa0506f424f11c4396bd45dba735664, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &764765215 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 103387812896415252, guid: 10762d6715add5c48a2cc1f6e22c01fa,
-    type: 3}
-  m_PrefabInstance: {fileID: 3044491086080059343}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &828588871
 GameObject:
   m_ObjectHideFlags: 0
@@ -1207,7 +1201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9937356c3a010bb4cb0b749be9db122a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settingsMenu: {fileID: 764765215}
+  settingsMenu: {fileID: 999586862}
   focusSound: {fileID: 8300000, guid: 1904551d55ce5684fa7c1eb5bc38070d, type: 3}
 --- !u!82 &933848395
 AudioSource:
@@ -1385,6 +1379,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &999586862 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2712537195298263362, guid: 10762d6715add5c48a2cc1f6e22c01fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 3044491086080059343}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1024041242
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2505,6 +2505,11 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2246982667571160834, guid: 10762d6715add5c48a2cc1f6e22c01fa,
+        type: 3}
+      propertyPath: SettingsMenuController
+      value: 
+      objectReference: {fileID: 123528320}
     - target: {fileID: 3315869792989976402, guid: 10762d6715add5c48a2cc1f6e22c01fa,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2628,7 +2633,7 @@ PrefabInstance:
     - target: {fileID: 6340116631089222057, guid: 10762d6715add5c48a2cc1f6e22c01fa,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6340116631089222057, guid: 10762d6715add5c48a2cc1f6e22c01fa,
         type: 3}
