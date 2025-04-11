@@ -33,8 +33,7 @@ public class CanvasSwitcher : MonoBehaviour
 
     void Update()
     {
-        if ((Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.rightButton.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame) && !isAnimation
-            && PlayerPrefs.GetInt("isSettings", 0) == 0 && !Input.GetKeyDown(KeyCode.Escape))
+        if ((Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.rightButton.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame) && !isAnimation)
         {
             SwitchCanvas();
         }

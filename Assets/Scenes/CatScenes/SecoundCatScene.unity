@@ -135,11 +135,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Settings
       objectReference: {fileID: 0}
-    - target: {fileID: 2246982667571160834, guid: 10762d6715add5c48a2cc1f6e22c01fa,
-        type: 3}
-      propertyPath: SettingsMenuController
-      value: 
-      objectReference: {fileID: 515330250}
     - target: {fileID: 3315869792989976402, guid: 10762d6715add5c48a2cc1f6e22c01fa,
         type: 3}
       propertyPath: m_Pivot.x
@@ -267,7 +262,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 10762d6715add5c48a2cc1f6e22c01fa, type: 3}
 --- !u!1 &67267899 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 2712537195298263362, guid: 10762d6715add5c48a2cc1f6e22c01fa,
+  m_CorrespondingSourceObject: {fileID: 103387812896415252, guid: 10762d6715add5c48a2cc1f6e22c01fa,
     type: 3}
   m_PrefabInstance: {fileID: 67267898}
   m_PrefabAsset: {fileID: 0}
@@ -519,7 +514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsMenu: {fileID: 67267899}
-  stopWhenSettings: {fileID: 0}
+  stopWhenSettings: {fileID: 1061078771}
   stopFonSound: {fileID: 2042188845}
 --- !u!4 &515330252
 Transform:

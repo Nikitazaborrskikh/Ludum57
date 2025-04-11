@@ -135,11 +135,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Settings
       objectReference: {fileID: 0}
-    - target: {fileID: 2246982667571160834, guid: 10762d6715add5c48a2cc1f6e22c01fa,
-        type: 3}
-      propertyPath: SettingsMenuController
-      value: 
-      objectReference: {fileID: 1710028576}
     - target: {fileID: 3315869792989976402, guid: 10762d6715add5c48a2cc1f6e22c01fa,
         type: 3}
       propertyPath: m_Pivot.x
@@ -267,7 +262,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 10762d6715add5c48a2cc1f6e22c01fa, type: 3}
 --- !u!1 &84674332 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 2712537195298263362, guid: 10762d6715add5c48a2cc1f6e22c01fa,
+  m_CorrespondingSourceObject: {fileID: 103387812896415252, guid: 10762d6715add5c48a2cc1f6e22c01fa,
     type: 3}
   m_PrefabInstance: {fileID: 84674331}
   m_PrefabAsset: {fileID: 0}
@@ -465,7 +460,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: eed14698460a67d428db41f03b5985d3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 51b19721a3a7b2142824768d1f97b519, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -540,7 +535,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 97395cd98c5e5f44aae1557311ac1cab, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5653f093229e48a41afb620df439b593, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -882,7 +877,7 @@ MonoBehaviour:
   blinkDuration: 0.5
   isStart: 1
   isBoss: 0
-  sceneAfterLevel: Menu
+  sceneAfterLevel: 
 --- !u!1 &393889614
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,7 +935,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a6d70915dc2ebd24fbea231bf163aaf9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9299295df7c740b4c88a7b167b4e488c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1151,7 +1146,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9299295df7c740b4c88a7b167b4e488c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b88c2efed5b0cf5428e1b5a88b270114, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1294,9 +1289,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'THE MAIN POINT IS THAT NOW I UNDERSTAND: WHO I WAS CONCEIVED TO BE SHOULDN''T
-    DEFINE WHO I AM.I ENJOYED GOING THROUGH THIS PATH LIKE A VIRUS AND I WILL CONTINUE
-    IT THE SAME WAY.'
+  m_text: "THE MAIN POINT IS THAT NOW I UNDERSTAND: WHO I WAS CONCEIVED TO BE SHOULDN'T
+    DEFINE WHO I AM. \LI ENJOYED GOING THROUGH\rTHIS PATH LIKE A VIRUS AND I WILL
+    CONTINUE IT THE SAME WAY."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f1137fb6c59ef4b419be81779d6b6005, type: 2}
   m_sharedMaterial: {fileID: 3292598990905121614, guid: f1137fb6c59ef4b419be81779d6b6005,
@@ -1431,10 +1426,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'I SEARCHED THROUGH THE DOCUMENTS, CHECKING THE DATES, AND EVERYTHING
-
-    LED
-    ME TO THE FACT THAT I SHOULD''T HAVE BECOME A VIRUS.'
+  m_text: "I SEARCHED THROUGH THE DOCUMENTS, CHECKING THE DATES, AND EVERYTHING\r\nLED
+    ME TO THE FACT THAT I SHOULDN'T HAVE\rBECOME A VIRUS."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f1137fb6c59ef4b419be81779d6b6005, type: 2}
   m_sharedMaterial: {fileID: 3292598990905121614, guid: f1137fb6c59ef4b419be81779d6b6005,
@@ -2395,11 +2388,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5941819587454032447, guid: cfa64baf4aea38c4082f1c9a82a698ee,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -5.7509766
-      objectReference: {fileID: 0}
     - target: {fileID: 7793816624447196762, guid: cfa64baf4aea38c4082f1c9a82a698ee,
         type: 3}
       propertyPath: m_Name
@@ -2446,7 +2434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsMenu: {fileID: 84674332}
-  stopWhenSettings: {fileID: 0}
+  stopWhenSettings: {fileID: 357374898}
   stopFonSound: {fileID: 1533543319}
 --- !u!4 &1710028578
 Transform:
@@ -2520,7 +2508,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b88c2efed5b0cf5428e1b5a88b270114, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eed14698460a67d428db41f03b5985d3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3100,7 +3088,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 51b19721a3a7b2142824768d1f97b519, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 97395cd98c5e5f44aae1557311ac1cab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3292,7 +3280,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "I TURNED OFF THE ABSORPTION SYSTEM AND TOOK A CLOSER LOOK.\_\r\nEVERYTHING
-    SEEMED FAMILIAR TO ME."
+    SEEMED FAMILIAR TO ME\u2026"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f1137fb6c59ef4b419be81779d6b6005, type: 2}
   m_sharedMaterial: {fileID: 3292598990905121614, guid: f1137fb6c59ef4b419be81779d6b6005,
