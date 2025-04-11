@@ -10,9 +10,9 @@ namespace Enemies
     {
         [SerializeField] protected EnemyConfig config;
         [SerializeField] private float triggerRadius;
-        [SerializeField] private GameObject upgradeDropPrefab;
+        [Inject] protected UpgradeManager upgradeManager;
         [Inject] protected ProjectilePool projectilePool;
-        [Inject] private DiContainer container;
+
         public float Health { get; set; }
         public abstract float AttackSpeed { get; }
         public abstract float DamagePerProjectile { get; }
@@ -119,11 +119,9 @@ namespace Enemies
         public virtual void Die()
         {
             OnEnemyDiedEvent?.Invoke();
-            float dropChance = 1f; 
-            if (Random.value < dropChance && upgradeDropPrefab != null)
+            if (Random.value < 0.3f)
             {
-                GameObject dropObj = container.InstantiatePrefab(upgradeDropPrefab, transform.position, Quaternion.identity, null);
-                
+                upgradeManager.OfferUpgrades();
             }
             Destroy(gameObject);
         }

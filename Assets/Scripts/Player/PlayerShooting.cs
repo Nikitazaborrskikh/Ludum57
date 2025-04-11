@@ -7,15 +7,15 @@ public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private GameObject primaryBulletPrefab;
     [SerializeField] private GameObject secondaryBulletPrefab;
-    [SerializeField] private float bulletSpeed = 10f; // Базовая скорость
+    [SerializeField] private float bulletSpeed = 10f;
     [SerializeField] private Transform bulletSpawnPoint;
 
     [Inject] private PlayerStats playerStats;
     private float primaryFireTimer;
     private float secondaryFireTimer;
-    private bool justDashed;
+    private bool justDashed; 
     private bool isPaused;
-
+    
     public void Pause()
     {
         isPaused = true;
@@ -25,7 +25,6 @@ public class PlayerShooting : MonoBehaviour
     {
         isPaused = false;
     }
-
     private void Update()
     {
         if (isPaused) return;
@@ -37,17 +36,17 @@ public class PlayerShooting : MonoBehaviour
     {
         Vector3 direction = GetShootDirection();
         float currentDamage = playerStats.Damage;
-        float currentBulletSpeed = bulletSpeed;
+        float currentBulletSpeed = bulletSpeed; // Локальная копия
 
         if (playerStats.SpecialEffects.ContainsKey("SQLi"))
         {
-            if (isPrimary && secondaryFireTimer > 0) currentDamage *= 2f;
-            if (!isPrimary && primaryFireTimer > 0) currentDamage *= 2f;
+            if (isPrimary && secondaryFireTimer > 0) currentDamage *= 1.5f;
+            if (!isPrimary && primaryFireTimer > 0) currentDamage *= 1.5f;
         }
-
+    
         if (playerStats.SpecialEffects.ContainsKey("Zero-Day") && justDashed)
         {
-            currentDamage *= 2f;
+            currentDamage *= 1.5f;
             justDashed = false;
         }
 
@@ -69,22 +68,18 @@ public class PlayerShooting : MonoBehaviour
         }
         else
         {
-            // Устанавливаем множитель скорости только для вторичной атаки
-            float speedMultiplier = playerStats.SpecialEffects.ContainsKey("RainbowTables") ? 2f : 1f;
-            currentBulletSpeed *= speedMultiplier;
-            Debug.Log($"Secondary bullet speed: {currentBulletSpeed} (base: {bulletSpeed}, multiplier: {speedMultiplier})");
-
+            currentBulletSpeed = playerStats.SpecialEffects.ContainsKey("RainbowTables") ? currentBulletSpeed * 1.5f : currentBulletSpeed;
             if (playerStats.SpecialEffects.ContainsKey("ParallelShot"))
             {
-                ShootParallel(direction, bulletPrefab, currentDamage, currentBulletSpeed);
+                ShootParallel(direction, bulletPrefab, currentDamage);
             }
             else if (playerStats.SpecialEffects.ContainsKey("Sniffing"))
             {
-                ShootSniffing(direction, bulletPrefab, currentDamage, currentBulletSpeed);
+                ShootSniffing(direction, bulletPrefab, currentDamage);
             }
             else
             {
-                ShootSingle(direction, bulletPrefab, currentDamage, null, currentBulletSpeed);
+                ShootSingle(direction, bulletPrefab, currentDamage);
             }
             secondaryFireTimer = playerStats.FireRate;
         }
@@ -92,29 +87,34 @@ public class PlayerShooting : MonoBehaviour
 
     private Vector3 GetShootDirection()
     {
+        // Vector2 mousePosition = Mouse.current.position.ReadValue();
+        // Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+        // Plane plane = new Plane(Vector3.up, transform.position);
+        // float distance;
+        // plane.Raycast(ray, out distance);
+        // Vector3 targetPoint = ray.GetPoint(distance);
+        // targetPoint.y = bulletSpawnPoint.position.y;
+        // return (targetPoint - bulletSpawnPoint.position).normalized;
         return transform.forward;
     }
 
-    private void ShootSingle(Vector3 direction, GameObject bulletPrefab, float damage, Vector3? spawnPosition = null, float currentBulletSpeed = -1f)
+    private void ShootSingle(Vector3 direction, GameObject bulletPrefab, float damage, Vector3? spawnPosition = null)
     {
         Vector3 position = spawnPosition ?? bulletSpawnPoint.position;
         Quaternion rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 90f, 0);
         GameObject bullet = Instantiate(bulletPrefab, position, rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
+    
         if (rb == null)
         {
             Debug.LogError("Rigidbody отсутствует на bulletPrefab!");
             return;
         }
-
-        // Используем переданную скорость или базовую, если не указана
-        float finalSpeed = currentBulletSpeed >= 0f ? currentBulletSpeed : bulletSpeed;
-        rb.velocity = direction * finalSpeed;
+        rb.velocity = direction * bulletSpeed;
 
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         if (bulletScript) bulletScript.SetDamage(damage);
     }
-
     private void ShootCone(Vector3 direction, GameObject bulletPrefab, float damage)
     {
         Quaternion leftRot = Quaternion.Euler(0, -10, 0);
@@ -130,7 +130,11 @@ public class PlayerShooting : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 90f, 0);
         GameObject bullet = Instantiate(bulletPrefab, position, rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        if (rb == null) return;
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody отсутствует на bulletPrefab!");
+            return;
+        }
         rb.velocity = direction * bulletSpeed;
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         if (bulletScript)
@@ -140,50 +144,53 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
-    private void ShootParallel(Vector3 direction, GameObject bulletPrefab, float damage, float currentBulletSpeed)
+    private void ShootParallel(Vector3 direction, GameObject bulletPrefab, float damage)
     {
         Vector3 offset = Vector3.Cross(direction, Vector3.up).normalized * 0.2f;
-        ShootSingle(direction, bulletPrefab, damage, bulletSpawnPoint.position + offset, currentBulletSpeed);
-        ShootSingle(direction, bulletPrefab, damage, bulletSpawnPoint.position - offset, currentBulletSpeed);
+        ShootSingle(direction, bulletPrefab, damage, bulletSpawnPoint.position + offset);
+        ShootSingle(direction, bulletPrefab, damage, bulletSpawnPoint.position - offset);
     }
 
-    private void ShootSniffing(Vector3 direction, GameObject bulletPrefab, float damage, float currentBulletSpeed)
+    private void ShootSniffing(Vector3 direction, GameObject bulletPrefab, float damage)
     {
         Vector3 position = bulletSpawnPoint.position;
         Quaternion rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 90f, 0);
         GameObject bullet = Instantiate(bulletPrefab, position, rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        if (rb == null) return;
-        rb.velocity = direction * currentBulletSpeed;
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody отсутствует на bulletPrefab!");
+            return;
+        }
+        rb.velocity = direction * bulletSpeed;
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         if (bulletScript) bulletScript.EnableSniffing();
     }
-
-    private IEnumerator StartSound(AudioClip sound, AudioSource audioSource)
+    private IEnumerator StartSound(AudioClip Sound, AudioSource audioSource)
     {
-        audioSource.PlayOneShot(sound);
+        audioSource.PlayOneShot(Sound);
         yield return null;
     }
 
-    public void OnPrimaryAttack(InputAction.CallbackContext context, AudioClip sound, AudioSource audioSource)
+    public void OnPrimaryAttack(InputAction.CallbackContext context, AudioClip Sound, AudioSource audioSource)
     {
         if (context.performed && primaryFireTimer <= 0)
         {
-            StartCoroutine(StartSound(sound, audioSource));
+            StartCoroutine(StartSound(Sound, audioSource));
             Shoot(primaryBulletPrefab, true);
-            if (playerStats.SpecialEffects.ContainsKey("RCE")) Shoot(secondaryBulletPrefab, false);
+            if (playerStats.SpecialEffects.ContainsKey("RCE")) Shoot(secondaryBulletPrefab, false); 
         }
     }
 
-    public void OnSecondaryAttack(InputAction.CallbackContext context, AudioClip sound, AudioSource audioSource)
+    public void OnSecondaryAttack(InputAction.CallbackContext context, AudioClip Sound, AudioSource audioSource)
     {
         if (context.performed && secondaryFireTimer <= 0)
         {
-            StartCoroutine(StartSound(sound, audioSource));
+            StartCoroutine(StartSound(Sound, audioSource));
             Shoot(secondaryBulletPrefab, false);
             if (playerStats.SpecialEffects.ContainsKey("RCE")) Shoot(primaryBulletPrefab, true);
         }
     }
 
-    public void SetJustDashed() => justDashed = true;
+    public void SetJustDashed() => justDashed = true; 
 }

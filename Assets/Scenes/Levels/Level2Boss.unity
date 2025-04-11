@@ -2174,7 +2174,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 1569848960508905575, guid: e53d791686fe67b49a12a5ae56ce0b92, type: 3}
 --- !u!1001 &786208321
@@ -2818,26 +2818,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3094833498308533476, guid: da7ae020e03e3ee48b4bc28dcec0e2a1,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3094833498308533476, guid: da7ae020e03e3ee48b4bc28dcec0e2a1,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3094833498308533476, guid: da7ae020e03e3ee48b4bc28dcec0e2a1,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3094833498308533476, guid: da7ae020e03e3ee48b4bc28dcec0e2a1,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3361159015195053015, guid: da7ae020e03e3ee48b4bc28dcec0e2a1,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2854,26 +2834,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3361159015195053015, guid: da7ae020e03e3ee48b4bc28dcec0e2a1,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3745867871527127323, guid: da7ae020e03e3ee48b4bc28dcec0e2a1,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3745867871527127323, guid: da7ae020e03e3ee48b4bc28dcec0e2a1,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3745867871527127323, guid: da7ae020e03e3ee48b4bc28dcec0e2a1,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3745867871527127323, guid: da7ae020e03e3ee48b4bc28dcec0e2a1,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
@@ -3272,26 +3232,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TwoFactorAuth
       objectReference: {fileID: 0}
-    - target: {fileID: 2312497903731687316, guid: c594383cc03a2004eb7a6cd08dfa826b,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2312497903731687316, guid: c594383cc03a2004eb7a6cd08dfa826b,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2433060738335104875, guid: c594383cc03a2004eb7a6cd08dfa826b,
         type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 174007945}
-    - target: {fileID: 7997655041506597609, guid: c594383cc03a2004eb7a6cd08dfa826b,
-        type: 3}
-      propertyPath: m_Mass
-      value: 20
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

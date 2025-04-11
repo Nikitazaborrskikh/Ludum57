@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: DoS
   m_EditorClassIdentifier: 
   upgradeName: DoS
-  upgradeTypeKey: LMB
-  description: Significantly increases the attack speed
+  upgradeNameImg: {fileID: 21300000, guid: e19b039f8862b2e418465d3b18f3ad6e, type: 3}
+  description: {fileID: 21300000, guid: feb54b0e98e23b045821b92815b8d2c7, type: 3}
+  icon: {fileID: 21300000, guid: 8eebdd174f8ba114898f3882116390e2, type: 3}
   upgradeType: 1
-  value: -0.25
+  value: -0.2
   effectType: 0
   isPrimaryAttack: 1
   specialEffect: 

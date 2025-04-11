@@ -1,8 +1,6 @@
 using Projectiles;
 using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
-
 namespace Enemies.Bosses
 {
     public class TwoFactorAuth : BaseEnemy
@@ -10,7 +8,6 @@ namespace Enemies.Bosses
         public AudioClip shootSound;
         public AudioClip DieSound;
         public GameObject audioSource;
-        [SerializeField] private Slider slider;
         public override float AttackSpeed => currentPhase == 1 ?
             config.twoFactorAuth.phase1.attackSpeed :
             config.twoFactorAuth.phase2.attackSpeed;
@@ -34,7 +31,6 @@ namespace Enemies.Bosses
 
         private void Awake()
         {
-            slider.maxValue = config.twoFactorAuth.phase1.health;
             Health = config.twoFactorAuth.phase1.health;
             rb = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
@@ -87,7 +83,6 @@ namespace Enemies.Bosses
         public override void TakeDamage(float damage)
         {
             Health -= damage;
-            slider.value = Health;
             if (Health <= 0 && currentPhase == 1)
             {
                 currentPhase = 2;

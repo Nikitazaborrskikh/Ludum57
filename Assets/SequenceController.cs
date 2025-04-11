@@ -5,22 +5,17 @@ using UnityEngine;
 
 public class SequenceController : MonoBehaviour
 {
-    public SectionController[] sections;
-    public float warningTime = 1f;
-    public float activeTime = 1f;
-    [SerializeField] private int activeSectionsCount = 2;
+    public SectionController[] sections; // Массив секций, который вы заполните в инспекторе
+    public float warningTime = 1f;       // Время предупреждения
+    public float activeTime = 1f;        // Время активности
 
     void Start()
     {
+        // Проверяем, что все секции назначены
         if (sections == null || sections.Length == 0)
         {
             Debug.LogError("Sections array is empty! Please assign sections in the Inspector.");
             return;
-        }
-        if (activeSectionsCount > sections.Length)
-        {
-            Debug.LogWarning($"activeSectionsCount ({activeSectionsCount}) exceeds sections length ({sections.Length}). Setting to max available.");
-            activeSectionsCount = sections.Length;
         }
         StartCoroutine(RunSequence());
     }
@@ -29,28 +24,23 @@ public class SequenceController : MonoBehaviour
     {
         while (true)
         {
-          
+            // Случайная последовательность
             List<int> sequence = new List<int>();
             for (int i = 0; i < sections.Length; i++)
                 sequence.Add(i);
+            sequence = sequence.OrderBy(x => Random.value).ToList();
 
-           
-            sequence = sequence.OrderBy(x => Random.value).Take(activeSectionsCount).ToList();
-
-           
             foreach (int index in sequence)
             {
+                // Предупреждение
                 sections[index].SetWarning(true);
-            }
-            yield return new WaitForSeconds(warningTime);
-
-          
-            foreach (int index in sequence)
-            {
+                yield return new WaitForSeconds(warningTime);
+                
+                // Активация
                 sections[index].SetWarning(false);
                 sections[index].Activate();
+                yield return new WaitForSeconds(activeTime);
             }
-            yield return new WaitForSeconds(activeTime);
         }
     }
 }

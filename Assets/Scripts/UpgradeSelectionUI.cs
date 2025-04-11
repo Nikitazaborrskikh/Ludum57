@@ -34,31 +34,17 @@ public class UpgradeSelectionUI : MonoBehaviour
         option1 = opt1;
         option2 = opt2;
 
-  
         upgradeText1.text = opt1.description;
+        upgradeText2.text = opt2.description;
         nameText1.text = opt1.name;
+        nameText2.text = opt2.name;
         typeText1.text = opt1.upgradeTypeKey;
-        button1.onClick.RemoveAllListeners();
-        button1.onClick.AddListener(() => SelectUpgrade(option1));
-        button1.gameObject.SetActive(true);
+        typeText2.text = opt2.upgradeTypeKey;
         
-        if (opt2 != null)
-        {
-            upgradeText2.text = opt2.description;
-            nameText2.text = opt2.name;
-            typeText2.text = opt2.upgradeTypeKey;
-            button2.onClick.RemoveAllListeners();
-            button2.onClick.AddListener(() => SelectUpgrade(option2));
-            button2.gameObject.SetActive(true);
-        }
-        else
-        {
-          
-            upgradeText2.text = "";
-            nameText2.text = "";
-            typeText2.text = "";
-            button2.gameObject.SetActive(false);
-        }
+        button1.onClick.RemoveAllListeners();
+        button2.onClick.RemoveAllListeners();
+        button1.onClick.AddListener(() => SelectUpgrade(option1));
+        button2.onClick.AddListener(() => SelectUpgrade(option2));
 
         panel.SetActive(true);
         PauseGame();
@@ -70,7 +56,6 @@ public class UpgradeSelectionUI : MonoBehaviour
         panel.SetActive(false);
         ResumeGame();
     }
-
     private void PauseGame()
     {
         foreach (var pausable in pausables)
@@ -79,6 +64,10 @@ public class UpgradeSelectionUI : MonoBehaviour
         }
     }
 
+    public void LogButton()
+    {
+        Debug.Log("Button Clicked");
+    }
     private void ResumeGame()
     {
         foreach (var pausable in pausables)
@@ -90,6 +79,6 @@ public class UpgradeSelectionUI : MonoBehaviour
 
 public interface IPausable
 {
-    void Pause();
-    void Resume();
+     void Pause();
+     void Resume();
 }

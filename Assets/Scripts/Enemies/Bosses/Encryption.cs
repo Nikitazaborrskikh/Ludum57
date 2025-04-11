@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 
 namespace Enemies.Bosses
 {
@@ -9,7 +8,6 @@ namespace Enemies.Bosses
         public AudioClip shootSound;
         public AudioClip DieSound;
         public GameObject audioSource;
-        [SerializeField] private Slider healthSlider;
 
         [SerializeField] private SequenceController sequenceController;
         public override float AttackSpeed => config.encryptionStats.attackSpeed;
@@ -19,8 +17,6 @@ namespace Enemies.Bosses
 
         private void Awake()
         {
-            healthSlider.maxValue = config.encryptionStats.health;
-            healthSlider.value = config.encryptionStats.health;
             Health = config.encryptionStats.health;
         }
 
@@ -36,9 +32,8 @@ namespace Enemies.Bosses
 
         public override void TakeDamage(float damage)
         {
-            
+            Debug.Log($"Enemy {gameObject.name} took {damage} damage");
             Health -= damage;
-            healthSlider.value -= damage;
             if (Health <= 0)
             {
                 StartCoroutine(StartSound(DieSound));
